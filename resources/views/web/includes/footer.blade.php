@@ -4,8 +4,8 @@
         <div class="row footer-top-29">
           <div class="col-lg-4 col-md-6 footer-list-29 footer-1 mt-md-4">
             <a class="footer-logo mb-md-3 mb-2" href="#url"><img alt="" />Teben Tutors</a>
-            <p>We amplify important ideas in mathematics education to help teachers grow their practice and our profession. Lorem ipsum dolor sit
-              amet consectetur adipisicing elit.</p>
+            <p>We amplify important ideas in education to help students grow in their studies and talents.
+          Teachers are given the opportunity to develop in their profession through our resources.</p>
           </div>
           <div class="col-lg-2 col-md-6 footer-list-29 footer-2 mt-5">
             <h6 class="footer-title-29">Explore More</h6>
@@ -13,8 +13,8 @@
               <li><a href="gallery.html">Gallery</a></li>
               <li><a href="courses.html">Courses</a></li>
               <li><a href="landing-single.html">Landing Page</a></li>
-              <li><a href="signup.html">Apply Now</a></li>
-              <li><a href="contact.html">Buy Course Online</a></li>
+              <li><a href="signup.html">Register Now</a></li>
+              <li><a href="contact.html">Buy Exam Pin</a></li>
             </ul>
           </div>
           <div class="col-lg-4 col-md-6 footer-list-29 footer-3 mt-5">
@@ -22,15 +22,15 @@
               <h6 class="footer-title-29">Recent Post</h6>
               <a class="d-grid twitter-feed" href="blog-single.html">
                 <img src="{{ $web_source }}/images/g1.jpg" class="img-fluid rounded" alt="">
-                <p>How to get Programming language Cartification in 45 days.</p>
+                <p>Let's grow your school.</p>
               </a>
               <a class="d-grid twitter-feed" href="blog-single.html">
                 <img src="{{ $web_source }}/images/g2.jpg" class="img-fluid rounded" alt="">
-                <p>Top class learning from anywhere Lorem ipsum dolor sit amet.</p>
+                <p>Providing Qualified/Experienced Teachers for Schools.</p>
               </a>
               <a class="d-grid twitter-feed" href="blog-single.html">
                 <img src="{{ $web_source }}/images/g3.jpg" class="img-fluid rounded" alt="">
-                <p>Improving lives through learning Lorem ipsum dolor sit amet.</p>
+                <p>Improving schools that face academic and growth challenges.</p>
               </a>
             </div>
           </div>
