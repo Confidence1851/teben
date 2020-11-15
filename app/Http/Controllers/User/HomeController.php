@@ -28,6 +28,7 @@ use Response;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
+use App\Referral;
 use App\SchoolAccount;
 use \Milon\Barcode\DNS1D;
 use \Milon\Barcode\DNS2D;
@@ -103,7 +104,7 @@ class HomeController extends Controller
         else{
             $user = auth()->user();
         }
-        $referrals = $user->downlines;
+        $referrals = Referral::where("referrer_id" , $user->id)->paginate(10);
         return view("user.referrals.index",compact('user' , 'referrals'));
     }
 

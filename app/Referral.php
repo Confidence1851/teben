@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Referral extends Model
 {
+    protected $guarded =[];
+
     public function upline(){
         return $this->belongsTo(User::class , "referrer_id");
     }

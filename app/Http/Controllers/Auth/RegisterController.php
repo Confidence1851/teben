@@ -74,6 +74,7 @@ class RegisterController extends Controller
     {
         DB::beginTransaction();
         try{
+
             $user = User::create([
                 'name' => $data['name'],
                 'username' => $data['username'],
@@ -86,14 +87,16 @@ class RegisterController extends Controller
                 $ref = User::where('uuid',$code)->first() ?? developerAccount();
                 if(!empty($ref)){
                     $refWallet = refWallet($ref);
+
                     $referral = Referral::create([
                         'user_id' => $user->id,
                         'referrer_id' => $ref->id,
                         'type' => 0,
                         'parent_points' => 2,
                         'my_points' => 10,
-                        'ref_direct' => session()->has("ref_code") ? 1 : 0 ,
+                        'ref_direct' => $data["referrer"] ? 1 : 0 ,
                     ]);
+
                     $refWallet->amount += $referral->my_points;
                     $refWallet->direct_refs += 1;
                     $refWallet->save();
@@ -114,6 +117,7 @@ class RegisterController extends Controller
         }
         catch(Exception $e){
             DB::rollback();
+            // dd($e);
         }
     }
 
