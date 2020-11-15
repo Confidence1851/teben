@@ -91,7 +91,7 @@
               <div class="blog-info">
                 <p class="date">Admission</p>
                 <h4>All Schools</h4>
-                <p class="blog-text">We can help you secure admission in the institution of your choice. 
+                <p class="blog-text">We can help you secure admission into the institution of your choice. 
                   Your success is certain</p>
               </div>
             </div>
@@ -195,7 +195,7 @@ For both local and international universities and colleges?</p>
                 <p>We provide a materialistic moral and academic counseling support.</p>
                 <ul>
                   <li>choosing a life career becomes easier.</li>
-                  <li>Save guard outstanding performances.</li>
+                  <li>Safeguard outstanding performances.</li>
                   <li>Doing the right thing,
                     at the right time.</li>
                   <li>Encourage self responsibility</li>
@@ -233,10 +233,10 @@ For both local and international universities and colleges?</p>
     <div class="container">
       <div class="middle-section">
         <div class="section-width">
-          <h2>Start making money from here.Invite people to watch a. D download your videos and you get paid</h2>
+          <h2>Start making money from here.Invite people to watch and download your videos and you get paid</h2>
         </div>
         <div class="link-list-menu">
-            <p class="mb-5">We have you in mind. Make money while you watch or download, Make Money when you teach, Make money when you Upload your personal videos. We lucrative for you!</p>
+            <p class="mb-5">We have you in mind. Make money while you watch or download, Make Money when you teach, Make money when you upload your personal videos. We are lucrative for you!</p>
             <a href="about.html" class="btn btn-outline-light btn-more">About Us</a>
         </div>
       </div>
