@@ -45,6 +45,14 @@ class User extends Authenticatable //implements MustVerifyEmail
         return $this->hasOne(Teacher::class);
     }
 
+    public function downlines(){
+        return $this->hasMany(Referral::class , "referrer_id");
+    }
+
+    public function referral(){
+        return $this->hasOne(Referral::class , "user_id");
+    }
+
     public function agent(){
         return $this->hasOne(Agent::class);
     }

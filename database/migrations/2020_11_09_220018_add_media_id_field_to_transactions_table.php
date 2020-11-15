@@ -14,8 +14,8 @@ class AddMediaIdFieldToTransactionsTable extends Migration
     public function up()
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->unsignedBigInteger('media_id')->nullable()->after('amount');
-            $table->foreign('media_id')->references('id')->on('media');
+            if(!Schema::hasColumn('transactions', 'media_id')) $table->unsignedBigInteger('media_id')->nullable()->after('amount');
+            if(Schema::hasColumn('transactions', 'media_id'))$table->foreign('media_id')->references('id')->on('media');
 
         });
     }

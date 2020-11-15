@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Helpers\AppConstants;
 use App\Http\Controllers\Controller;
+use App\Referral;
 use App\User;
+use Exception;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -54,6 +57,7 @@ class RegisterController extends Controller
         // ]);
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:50'],
+            'referrer' => ['required', 'string', 'max:50'],
             'username' => ['required', 'string', 'max:20', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -68,13 +72,49 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'uuid' => $this->UUid(),
-            'role' => AppConstants::UNDEFINED_USER_TYPE,
-            'password' => Hash::make($data['password']),
-        ]);
+        DB::beginTransaction();
+        try{
+            $user = User::create([
+                'name' => $data['name'],
+                'username' => $data['username'],
+                'uuid' => $this->UUid(),
+                'role' => AppConstants::UNDEFINED_USER_TYPE,
+                'password' => Hash::make($data['password']),
+            ]);
+
+            if(!empty($code = $data['referrer'] ?? developerAccount()->uuid )){
+                $ref = User::where('uuid',$code)->first() ?? developerAccount();
+                if(!empty($ref)){
+                    $refWallet = refWallet($ref);
+                    $referral = Referral::create([
+                        'user_id' => $user->id,
+                        'referrer_id' => $ref->id,
+                        'type' => 0,
+                        'parent_points' => 2,
+                        'my_points' => 10,
+                        'ref_direct' => session()->has("ref_code") ? 1 : 0 ,
+                    ]);
+                    $refWallet->amount += $referral->my_points;
+                    $refWallet->direct_refs += 1;
+                    $refWallet->save();
+
+                    if(!empty($upline = optional($ref->referral)->upline)){
+                        $upWallet = refWallet($upline);
+                        $upWallet->amount += $referral->parent_points;
+                        $upWallet->indirect_refs += 1;
+                        $upWallet->save();
+                    }
+                }
+            }
+
+            session()->forget("ref_code");
+            session()->forget("ref_name");
+            DB::commit();
+            return $user;
+        }
+        catch(Exception $e){
+            DB::rollback();
+        }
     }
 
     public function UUid(){
@@ -86,5 +126,17 @@ class RegisterController extends Controller
         else{
             $this->UUid();
         }
+    }
+
+    public function ref_invite($code){
+        $user = User::where('uuid',$code)->first();
+        if(empty($user)){
+            $user = new User();
+        }
+        session([
+            'ref_name' => $user->name,
+            'ref_code' => $user->uuid,
+        ]);
+        return redirect()->route('register');
     }
 }

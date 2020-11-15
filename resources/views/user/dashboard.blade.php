@@ -74,6 +74,18 @@
                             </div>
                         </div>
 
+                        <div class="col-md-4 mb-4 select_role">
+                            <div class="card p-4">
+                                <b>Referral Code:</b> {{ $user->uuid }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 mb-4 select_role">
+                            <div class="card p-4">
+                                <b>Referral link:</b> {{ route("ref_invite" , $user->uuid) }}
+                            </div>
+                        </div>
+
 
                         <div class="col-md-4 mb-4 select_role">
                             <div class="card p-4">
@@ -125,12 +137,14 @@
                         </div>
 
                         <div class="col-md-4 mb-4 select_role">
-                            <div class="card p-4">
-                                <div class="text-center">
-                                    <i class="fa fa-user fs-30"></i>
+                            <a href="{{ route("user.referrals") }}">
+                                <div class="card p-4">
+                                    <div class="text-center">
+                                        <i class="fa fa-user fs-30"></i>
+                                    </div>
+                                    <div class="text-center">Referral Tree</div>
                                 </div>
-                                <div class="text-center">Referral Tree</div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

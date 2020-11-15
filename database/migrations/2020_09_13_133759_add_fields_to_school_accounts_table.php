@@ -14,7 +14,7 @@ class AddFieldsToSchoolAccountsTable extends Migration
     public function up()
     {
         Schema::table('school_accounts', function (Blueprint $table) {
-            $table->tinyinteger('status')->default(0)->after('available');
+            if(!Schema::hasColumn('school_accounts', 'status')) $table->tinyinteger('status')->default(0)->after('available');
         });
     }
 

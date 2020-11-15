@@ -32,6 +32,7 @@ Route::get('/lgas/{state}', 'WebController@lgas')->name('lgas');
 
 Route::get('/my-notifications', 'HomeController@mynotifications');
 
+Route::get('/signup-invite/ref/{code}', 'Auth\RegisterController@ref_invite')->name('ref_invite');
 
 Route::namespace('Account')->prefix('account')->as('account.')->group(function(){
     Route::get('login', 'HomeController@login')->name('login');
@@ -62,6 +63,9 @@ Route::namespace('User')->middleware("auth")->group(function(){
         Route::get('/home', 'HomeController@index')->name('home');
 
         Route::prefix('user')->as('user.')->group(function(){
+
+        Route::get('/referral-tree/{id?}', 'HomeController@referrals')->name('referrals');
+
 
             Route::prefix('media')->as('media.')->group(function(){
                 Route::get('/index/{type}', 'MediaController@index')->name('index');

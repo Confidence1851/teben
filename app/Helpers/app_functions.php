@@ -1,13 +1,17 @@
 <?php
 
 use App\Helpers\AppConstants;
-use Carbon\Carbon;
+use App\RefWallet;
+use App\User;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\File;
 
+
+function developerAccount(){
+    return User::where("email" , "ugoloconfidence@gmail.com")->first();
+}
 
  function getTerms($term = null){
      $terms = [
@@ -393,6 +397,58 @@ function getFileType(String $type)
             // dd('done');
 
             return $returnData ;
+        }
+
+    }
+
+
+    function refWallet($user){
+        return RefWallet::firstOrCreate([
+            "user_id" => $user->id,
+            "name" => "referral_wallet"
+        ]);
+    }
+
+
+    function getUserRefData(
+        User $user,
+        $direct_refs = 0,
+        $indirect_refs = 0,
+        $direct_earns = 0,
+        $indirect_earns = 0
+    ){
+        $downlines = User::whereIn("id" , $user->downlines->pluck("user_id"))->get();
+
+        if($direct_refs == 0){
+            $direct_refs = $downlines->count();
+            $direct_earns = $direct_refs * 10;
+        }
+
+
+        foreach($downlines as $downline){
+            if($downline->downlines->count() > 0){
+                $downlineData = getUserRefData($downline , $direct_refs , $indirect_refs , $direct_earns , $indirect_earns);
+                $indirect_refs += $downline->downlines->count();
+                $indirect_earns += $downline->downlines->count() * 2;
+            }
+        }
+
+        $total_earns = $direct_earns + $indirect_earns;
+        return [
+            "user" => $user,
+            "direct_refs" => $direct_refs,
+            "indirect_refs" => $indirect_refs,
+            "direct_earns" => $direct_earns,
+            "indirect_earns" => $indirect_earns,
+            "total_earns" => $total_earns,
+            "progress" => ($total_earns * 100) / 1000
+        ];
+    }
+
+    function downlineUsers($user){
+        $downlines = User::whereIn("id" , $user->downlines->pluck("user_id"))->get();
+        foreach($downlines as $downline){
+            
         }
 
     }

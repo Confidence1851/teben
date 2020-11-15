@@ -90,6 +90,23 @@ class HomeController extends Controller
         return view('user.dashboard',compact('user'));
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function referrals($id = null)
+    {
+        if(!empty($id)){
+            $user = User::findorfail($id);
+        }
+        else{
+            $user = auth()->user();
+        }
+        $referrals = $user->downlines;
+        return view("user.referrals.index",compact('user' , 'referrals'));
+    }
+
 
 
     public function mynotifications($last = null){

@@ -14,7 +14,7 @@ class AddFieldsToCouponsTable extends Migration
     public function up()
     {
         Schema::table('coupons', function (Blueprint $table) {
-            $table->unsignedBigInteger('school_account_id')->nullable()->after('user_id');
+            if(!Schema::hasColumn('coupons', 'school_account_id')) $table->unsignedBigInteger('school_account_id')->nullable()->after('user_id');
         });
     }
 
