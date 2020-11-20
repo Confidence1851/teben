@@ -75,7 +75,7 @@ class MediaController extends Controller
 
                 $tran = Transaction::create([
                     'user_id' => $user->id,
-                    'uuid' => $this->UUid(),
+                    'uuid' => getRandomToken(6),
                     'purpose' => 'You downloaded an item for the sum of NGN'.$amt ,
                     'type' => 'Debit',
                     'amount' => $amt,

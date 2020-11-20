@@ -32,6 +32,7 @@
                 <i class="material-icons">close</i>
                 </button>
                 <span>{{$error }}</span>
-        @endforeach
-    </div>
+      </div>
+      @endforeach
+  </div>
 </div>

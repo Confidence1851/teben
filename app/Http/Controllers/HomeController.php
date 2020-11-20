@@ -211,19 +211,19 @@ class HomeController extends Controller
     }
 
     public function uploadreceipt(Request $request){
-        $user = Auth::User();
-        $data = $request->validate([
-            'image' => 'required'
-        ]);
-        $image = $request->file('image');
-        $filename = putFileInPrivateStorage($image , $this->receiptImagePath);
+        // $user = Auth::User();
+        // $data = $request->validate([
+        //     'image' => 'required'
+        // ]);
+        // $image = $request->file('image');
+        // $filename = putFileInPrivateStorage($image , $this->receiptImagePath);
 
-        $data['user_id'] = $user->id;
-        $data['image'] = $filename;
-        $data['type'] = 'Uploaded';
+        // $data['user_id'] = $user->id;
+        // $data['image'] = $filename;
+        // $data['type'] = 'Uploaded';
 
-        $receipt = PayReceipt::create($data);
-        Session::flash('success_msg','Deposit would be processed soon!');
+        // $receipt = PayReceipt::create($data);
+        // Session::flash('success_msg','Deposit would be processed soon!');
         return redirect()->back();
     }
 

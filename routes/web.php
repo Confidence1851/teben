@@ -61,8 +61,9 @@ Route::namespace('User')->middleware("auth")->group(function(){
 
     Route::middleware("complete_profile")->group(function(){
         Route::get('/home', 'HomeController@index')->name('home');
+        Route::post('/activate-referral', 'HomeController@activateReferralAccount')->name('user.activate.referral');
 
-        Route::prefix('user')->as('user.')->group(function(){
+        Route::middleware("referral_complete")->prefix('user')->as('user.')->group(function(){
 
         Route::get('/referral-tree/{id?}', 'HomeController@referrals')->name('referrals');
 
@@ -70,6 +71,13 @@ Route::namespace('User')->middleware("auth")->group(function(){
             Route::prefix('media')->as('media.')->group(function(){
                 Route::get('/index/{type}', 'MediaController@index')->name('index');
                 Route::post('/download', 'MediaController@download')->name('download');
+            });
+
+            Route::prefix('account')->as('account.')->group(function(){
+                Route::post('/deposit', 'AccountController@deposit')->name('deposit');
+                Route::post('/withdraw', 'AccountController@withdraw')->name('withdraw');
+                Route::match(["get" , "post"] , '/profile', 'AccountController@profile')->name('profile');
+                Route::match(["get" , "post"] , '/profile/bank', 'AccountController@bank')->name('profile.bank');
             });
         });
     });

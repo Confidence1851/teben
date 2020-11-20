@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\AppConstants;
 use App\Http\Controllers\Controller;
 use App\Referral;
+use App\Traits\Constants;
 use App\User;
 use Exception;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -25,7 +26,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers , Constants;
 
     /**
      * Where to redirect users after registration.
@@ -86,27 +87,7 @@ class RegisterController extends Controller
             if(!empty($code = $data['referrer'] ?? developerAccount()->uuid )){
                 $ref = User::where('uuid',$code)->first() ?? developerAccount();
                 if(!empty($ref)){
-                    $refWallet = refWallet($ref);
-
-                    $referral = Referral::create([
-                        'user_id' => $user->id,
-                        'referrer_id' => $ref->id,
-                        'type' => 0,
-                        'parent_points' => 2,
-                        'my_points' => 10,
-                        'ref_direct' => $data["referrer"] ? 1 : 0 ,
-                    ]);
-
-                    $refWallet->amount += $referral->my_points;
-                    $refWallet->direct_refs += 1;
-                    $refWallet->save();
-
-                    if(!empty($upline = optional($ref->referral)->upline)){
-                        $upWallet = refWallet($upline);
-                        $upWallet->amount += $referral->parent_points;
-                        $upWallet->indirect_refs += 1;
-                        $upWallet->save();
-                    }
+                    processReferral($user , $ref , $data["referrer"] ? 1 : 0);
                 }
             }
 

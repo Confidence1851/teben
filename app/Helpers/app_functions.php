@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\AppConstants;
+use App\Referral;
 use App\RefWallet;
 use App\User;
 use Illuminate\Support\Facades\Response;
@@ -8,26 +9,28 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
-
-function developerAccount(){
-    return User::where("email" , "ugoloconfidence@gmail.com")->first();
+function developerAccount()
+{
+    return User::where("email", "ugoloconfidence@gmail.com")->first();
 }
 
- function getTerms($term = null){
+ function getTerms($term = null)
+ {
      $terms = [
          1 => 'First',
          2 => 'Second',
          3 => 'Third',
      ];
-     if(!is_null($term)){
-         return  array_key_exists($term , $terms) ?  $terms[$term] :  null;
-    }
+     if (!is_null($term)) {
+         return  array_key_exists($term, $terms) ?  $terms[$term] :  null;
+     }
      return $terms;
  }
 
 
- function getLevels($level = null){
-    $levels = [
+ function getLevels($level = null)
+ {
+     $levels = [
         1 => 'Lower Primary',
         2 => 'Upper Primary',
         3 => 'Junior Secondary',
@@ -36,11 +39,11 @@ function developerAccount(){
         6 => 'JUPEB',
         7 =>'A Level'
     ];
-    if(!is_null($level)){
-       return  array_key_exists($level , $levels) ?  $levels[$level] :  null;
-    }
-    return $levels;
-}
+     if (!is_null($level)) {
+         return  array_key_exists($level, $levels) ?  $levels[$level] :  null;
+     }
+     return $levels;
+ }
 
 
 
@@ -49,38 +52,49 @@ function developerAccount(){
  * @param bool  type
  * @return String token
  */
-function getRandomToken($length , $typeInt = false){
-    if($typeInt){
-        $token = Str::substr(rand(1000000000,9999999999), 0, $length) ;
+function getRandomToken($length, $typeInt = true, $min = null)
+{
+    if ($typeInt) {
+        $token = "";
+        $ints = [0,1,2,3,4,5,6,7,8,9];
+        for ($i = 0; $i < $length; $i++) {
+            $token .= array_rand($ints, 1);
+        }
+        $token = (int)$token;
+    } else {
+        $token = "";
+        $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
+        $codeAlphabet.= "0123456789";
+        $max = strlen($codeAlphabet);
+    
+        for ($i=0; $i < $length; $i++) {
+            $token .= $codeAlphabet[random_int(0, $max-1)];
+        }
     }
-    $token = "";
-    $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
-    $codeAlphabet.= "0123456789";
-    $max = strlen($codeAlphabet);
-
-    for ($i=0; $i < $length; $i++) {
-        $token .= $codeAlphabet[random_int(0, $max-1)];
-    }
-
+    
     return $token;
 }
 
-/**Puts file in a public storage */
-function putFileInStorage($file , $path ){
-        $filename = uniqid().'.'.$file->getClientOriginalExtension();
-        $file->storeAs($path , $filename);
-        return $filename;
-}
 
-/**Puts file in a private storage */
-function putFileInPrivateStorage($file , $path){
+/**Puts file in a public storage */
+function putFileInStorage($file, $path)
+{
     $filename = uniqid().'.'.$file->getClientOriginalExtension();
-    Storage::putFileAs($path,$file,$filename,'private');
+    $file->storeAs($path, $filename);
     return $filename;
 }
 
-function resizeImageandSave($image ,$path , $disk = 'local', $width = 300 , $height = 300){
+/**Puts file in a private storage */
+function putFileInPrivateStorage($file, $path)
+{
+    $filename = uniqid().'.'.$file->getClientOriginalExtension();
+    Storage::putFileAs($path, $file, $filename, 'private');
+    return $filename;
+}
+
+function resizeImageandSave($image, $path, $disk = 'local', $width = 300, $height = 300)
+{
     // create new image with transparent background color
     $background = Image::canvas($width, $height, '#ffffff');
 
@@ -103,64 +117,70 @@ function resizeImageandSave($image ,$path , $disk = 'local', $width = 300 , $hei
 }
 
 // Returns full public path
-function my_asset($path = null ){
+function my_asset($path = null)
+{
     return route('index').env('ASSET_URL').'/'.$path;
 }
 
 
 /**Gets file from public storage */
-function getFileFromStorage($fullpath , $storage = 'public'){
-    if($storage == 'storage'){
-        return route('read_file',encrypt($fullpath));
+function getFileFromStorage($fullpath, $storage = 'public')
+{
+    if ($storage == 'storage') {
+        return route('read_file', encrypt($fullpath));
     }
     return my_asset($fullpath);
 }
 
 /**Deletes file from public storage */
-function deleteFileFromStorage($path){
+function deleteFileFromStorage($path)
+{
     unlink(public_path($path));
 }
 
 
 /**Deletes file from private storage */
-function deleteFileFromPrivateStorage($path){
+function deleteFileFromPrivateStorage($path)
+{
     $exists = Storage::disk('local')->exists($path);
-    if($exists){
+    if ($exists) {
         Storage::delete($path);
     }
 }
 
 
 /**Downloads file from private storage */
-function downloadFileFromPrivateStorage($path , $name){
+function downloadFileFromPrivateStorage($path, $name)
+{
     $name = $name ?? env('APP_NAME');
     $exists = Storage::disk('local')->exists($path);
-    if($exists){
+    if ($exists) {
         $type = Storage::mimeType($path);
-        $ext = explode('.',$path)[1];
+        $ext = explode('.', $path)[1];
         $display_name = $name.'.'.$ext;
         // dd($display_name);
         $headers = [
             'Content-Type' => $type,
         ];
 
-        return Storage::download($path,$display_name,$headers);
+        return Storage::download($path, $display_name, $headers);
     }
     return null;
 }
 
-function readPrivateFile($path){
-
+function readPrivateFile($path)
+{
 }
 
 
 /**Reads file from private storage */
-function getFileFromPrivateStorage($fullpath , $disk = 'local'){
-    if($disk == 'public'){
+function getFileFromPrivateStorage($fullpath, $disk = 'local')
+{
+    if ($disk == 'public') {
         $disk = null;
     }
     $exists = Storage::disk($disk)->exists($fullpath);
-    if($exists){
+    if ($exists) {
         $fileContents = Storage::disk($disk)->get($fullpath);
         $content = Storage::mimeType($fullpath);
         $response = Response::make($fileContents, 200);
@@ -172,7 +192,8 @@ function getFileFromPrivateStorage($fullpath , $disk = 'local'){
 
 
 
-function str_limit($string , $limit = 20 , $end  = '...'){
+function str_limit($string, $limit = 20, $end  = '...')
+{
     return Str::limit(strip_tags($string), $limit, $end);
 }
 
@@ -180,52 +201,56 @@ function str_limit($string , $limit = 20 , $end  = '...'){
 
 /**Returns file size */
 function bytesToHuman($bytes)
-    {
-        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+{
+    $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
 
-        for ($i = 0; $bytes > 1024; $i++) {
-            $bytes /= 1024;
-        }
-
-        return round($bytes, 2) . ' ' . $units[$i];
+    for ($i = 0; $bytes > 1024; $i++) {
+        $bytes /= 1024;
     }
+
+    return round($bytes, 2) . ' ' . $units[$i];
+}
 
 
 /** Returns File type
  * @return Image || Video || Document
  */
 function getFileType(String $type)
-    {
-        $imageTypes = imageMimes() ;
-        if(strpos($imageTypes,$type) !== false ){
-            return 'Image';
-        }
-
-        $videoTypes = videoMimes() ;
-        if(strpos($videoTypes,$type) !== false ){
-            return 'Video';
-        }
-
-        $docTypes = docMimes() ;
-        if(strpos($docTypes,$type) !== false ){
-            return 'Document';
-        }
+{
+    $imageTypes = imageMimes() ;
+    if (strpos($imageTypes, $type) !== false) {
+        return 'Image';
     }
 
-    function imageMimes(){
+    $videoTypes = videoMimes() ;
+    if (strpos($videoTypes, $type) !== false) {
+        return 'Video';
+    }
+
+    $docTypes = docMimes() ;
+    if (strpos($docTypes, $type) !== false) {
+        return 'Document';
+    }
+}
+
+    function imageMimes()
+    {
         return "image/jpeg,image/png,image/jpg,image/svg";
     }
 
-    function videoMimes(){
+    function videoMimes()
+    {
         return "video/x-flv,video/mp4,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi";
     }
 
-    function docMimes(){
+    function docMimes()
+    {
         return "application/pdf,application/docx,application/doc";
     }
 
 
-    function formatTime($minutes) {
+    function formatTime($minutes)
+    {
         $seconds = $minutes * 60;
         $dtF = new DateTime("@0");
         $dtT = new DateTime("@$seconds");
@@ -233,28 +258,22 @@ function getFileType(String $type)
         $h=$dtF->diff($dtT)->format('%h');
         $i=$dtF->diff($dtT)->format('%i');
         $s=$dtF->diff($dtT)->format('%s');
-        if($a>0)
-        {
-           return $dtF->diff($dtT)->format('%a days, %h hrs, %i mins and %s secs');
-        }
-        else if($h>0)
-        {
+        if ($a>0) {
+            return $dtF->diff($dtT)->format('%a days, %h hrs, %i mins and %s secs');
+        } elseif ($h>0) {
             return $dtF->diff($dtT)->format('%h hrs, %i mins ');
-        }
-        else if($i>0)
-        {
+        } elseif ($i>0) {
             return $dtF->diff($dtT)->format(' %i mins');
-        }
-        else
-        {
+        } else {
             return $dtF->diff($dtT)->format('%s seconds');
         }
     }
 
 
       
-    function getUserProfileStatuses($user = null ,$current = false){
-        if(empty($user)){
+    function getUserProfileStatuses($user = null, $current = false)
+    {
+        if (empty($user)) {
             $user = auth()->user();
         }
 
@@ -262,12 +281,12 @@ function getFileType(String $type)
             // "user_profile" => [
             //     "key" => "user_profile",
             //     "current" => null,
-            //     "status" => !empty($user->gender) && 
-            //                 !empty($user->country_id) && 
-            //                 !empty($user->state_id) && 
-            //                 !empty($user->city_id) && 
-            //                 // !empty($user->lga_id) && 
-            //                 // !empty($user->address) && 
+            //     "status" => !empty($user->gender) &&
+            //                 !empty($user->country_id) &&
+            //                 !empty($user->state_id) &&
+            //                 !empty($user->city_id) &&
+            //                 // !empty($user->lga_id) &&
+            //                 // !empty($user->address) &&
             //                 !empty($user->phone) ,
             //     "title" => "Complete Profile",
             // ],
@@ -312,23 +331,24 @@ function getFileType(String $type)
         );
 
 
-       if($current){
-            foreach($statuses as $key => $value){
-                if($value["status"] == false){
+        if ($current) {
+            foreach ($statuses as $key => $value) {
+                if ($value["status"] == false) {
                     return $statuses[$key];
                 }
             }
             $user->status = 1;
             $user->save();
             return true;
-       }
+        }
 
         return $statuses;
     }
 
 
 
-    function getStates(){
+    function getStates()
+    {
         return [];
         $curl = curl_init();
 
@@ -360,11 +380,11 @@ function getFileType(String $type)
 
             return $returnData ;
         }
-
     }
 
 
-    function getLgas($state){
+    function getLgas($state)
+    {
         return [];
 
         $curl = curl_init();
@@ -398,11 +418,11 @@ function getFileType(String $type)
 
             return $returnData ;
         }
-
     }
 
 
-    function refWallet($user){
+    function refWallet($user)
+    {
         return RefWallet::firstOrCreate([
             "user_id" => $user->id,
             "name" => "referral_wallet"
@@ -416,18 +436,18 @@ function getFileType(String $type)
         $indirect_refs = 0,
         $direct_earns = 0,
         $indirect_earns = 0
-    ){
-        $downlines = User::whereIn("id" , $user->downlines->pluck("user_id"))->get();
+    ) {
+        $downlines = User::whereIn("id", $user->downlines->pluck("user_id"))->get();
 
-        if($direct_refs == 0){
+        if ($direct_refs == 0) {
             $direct_refs = $downlines->count();
             $direct_earns = $direct_refs * 10;
         }
 
 
-        foreach($downlines as $downline){
-            if($downline->downlines->count() > 0){
-                $downlineData = getUserRefData($downline , $direct_refs , $indirect_refs , $direct_earns , $indirect_earns);
+        foreach ($downlines as $downline) {
+            if ($downline->downlines->count() > 0) {
+                $downlineData = getUserRefData($downline, $direct_refs, $indirect_refs, $direct_earns, $indirect_earns);
                 $indirect_refs += $downline->downlines->count();
                 $indirect_earns += $downline->downlines->count() * 2;
             }
@@ -445,10 +465,85 @@ function getFileType(String $type)
         ];
     }
 
-    function downlineUsers($user){
-        $downlines = User::whereIn("id" , $user->downlines->pluck("user_id"))->get();
-        foreach($downlines as $downline){
-            
+    function downlineUsers($user)
+    {
+        $downlines = User::whereIn("id", $user->downlines->pluck("user_id"))->get();
+        foreach ($downlines as $downline) {
         }
-
     }
+
+
+function processReferral(User $user, User $ref, $ref_direct = 0)
+{
+    $record = Referral::where(['user_id' => $user->id,'referrer_id' => $ref->id])->first();
+    if (empty($record)) {
+        $refWallet = refWallet($ref);
+        $referral = Referral::create([
+            'user_id' => $user->id,
+            'referrer_id' => $ref->id,
+            'type' => 0,
+            'status' => AppConstants::PENDING_TRANSACTION,
+            'parent_points' => 2,
+            'my_points' => 10,
+            'ref_direct' => $ref_direct,
+        ]);
+    
+        $refWallet->amount += $referral->my_points;
+        $refWallet->direct_refs += 1;
+        $refWallet->save();
+    
+        if (!empty($upline = optional($ref->referral)->upline)) {
+            $upWallet = refWallet($upline);
+            $upWallet->amount += $referral->parent_points;
+            $upWallet->indirect_refs += 1;
+            $upWallet->save();
+        }
+    }
+    return $referral ?? $record;
+}
+
+function banksLocalFile(){
+    return public_path("banks.txt");
+}
+
+function loadBanksListFromSource(){
+    $client = new \GuzzleHttp\Client(['http_errors' => false]);
+    $response = $client->request('GET', 'https://api.paystack.co/bank');
+    $banks =json_decode($response->getBody() );
+    if(file_exists(banksLocalFile())){
+        unlink(banksLocalFile());
+    }
+    file_put_contents(banksLocalFile() , json_encode($banks->data));
+}
+
+function getBanksList($index = null){
+    $file = file_get_contents(banksLocalFile());
+    if(empty($file)){
+        loadBanksListFromSource();
+        return getBanksList($index);
+    }
+    $banks = json_decode($file);
+    $list = [];
+    foreach($banks as $bank){
+       $list[$bank->code] = [
+           "code" => $bank->code,
+           "name" => $bank->name,
+       ];
+    }
+    if(!empty($index) && !array_key_exists($index , $list)) return null;
+    return empty($index) ? $list : $list[$index];
+}
+
+
+function verifyBankAccount($bank_code , $account_no)
+{
+    $client = new \GuzzleHttp\Client(['http_errors' => false]);
+    $header = array('Authorization'=> 'Bearer '.env("PAYSTACK_SECRET_KEY", config("paystack.secret.key")));
+    $link = 'account_number='.$account_no.'&bank_code='.$bank_code ;
+    $request = $client->get("https://api.paystack.co/bank/resolve?".$link, array('headers' => $header ));
+    $return = json_decode($request->getBody());
+    return [
+        "status" => $return->status,
+        "account_name" => $return->data->account_name ?? null,
+    ];
+}

@@ -23,7 +23,7 @@ class CreateReferralsTable extends Migration
             $table->decimal("my_points")->default(0);
             $table->tinyInteger("ref_direct")->default(0); //0 for code , 1 for url
             $table->tinyInteger("type")->default(0);  // 0 for manual , 1 for auto
-            $table->tinyInteger("status")->default(1);  // 0 for not active , 1 for active 
+            $table->tinyInteger("status")->default(0);  // 0 for not active , 1 for active 
             $table->string('coupon')->nullable();
             $table->string('amount')->nullable();
             $table->timestamps();
