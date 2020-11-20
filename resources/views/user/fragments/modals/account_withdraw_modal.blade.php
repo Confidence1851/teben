@@ -16,9 +16,9 @@
                 <p>Account Name : <span class="fr">{{optional($user->bank)->account_name ?? "N/A"}}</span></p>
             </div>
             <div class="modal-footer">
-                <form action="{{ route('withdraw') }}" method="post">{{csrf_field()}}
+                {{-- <form action="{{ route('withdraw') }}" method="post">{{csrf_field()}}
                     <button type="submit" class="btn btn-success">Proceed</button>
-                </form>
+                </form> --}}
             </div>
         </div>
     </div>

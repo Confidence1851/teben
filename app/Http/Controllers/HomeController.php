@@ -381,7 +381,7 @@ class HomeController extends Controller
             CURLOPT_POSTFIELDS => json_encode($wthData),
             CURLOPT_HTTPHEADER => array(
             	// Set here requred headers
-                "Authorization: Bearer sk_test_330316b67ae52439a917131419670adab0db60b6",
+                "Authorization: Bearer ",
                 "content-type: application/json",
             ),
         ));
@@ -428,7 +428,7 @@ class HomeController extends Controller
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
             	// Set Here Your Requesred Headers
-                "Authorization: Bearer sk_test_330316b67ae52439a917131419670adab0db60b6",
+                "Authorization: Bearer ",
             ),
         ));
         $response = curl_exec($curl);
@@ -622,7 +622,7 @@ class HomeController extends Controller
         $account_no = $data['account_no']; //2119206517;//
 
         $client = new \GuzzleHttp\Client(['http_errors' => false]);
-        $header = array('Authorization'=> 'Bearer sk_test_330316b67ae52439a917131419670adab0db60b6');
+        $header = array('Authorization'=> 'Bearer ');
         $link = 'account_number='.$account_no.'&bank_code='.$bank_code ;
         $request = $client->get("https://api.paystack.co/bank/resolve?".$link , array('headers' => $header ) );
         $return = json_decode($request->getBody());
