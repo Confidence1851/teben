@@ -56,7 +56,7 @@
                                     <div class="col-md-12">
                                         <div class="">
                                             <div class="bold m-2 h5">
-                                               <b> Wallet Balance </b>  {{$user->wallet}}
+                                               <b> Wallet Balance </b>  NGN{{ number_format($user->wallet) }}
                                             </div>
                                             <div class="d-flex">
                                                 <button class="btn-success btn btn-sm m-2" data-toggle="modal" data-target="#account_deposit_modal"> Deposit</button> </p>

@@ -19,13 +19,13 @@ class HomeController extends Controller
     public function __construct()
     {
         // $this->middleware(['auth','verified']);
-        $banks = Bank::get();
-        foreach($banks as $bank){
-            $bName = explode(',',$bank->bank_name);
-            if(count($bName)  == 2 ){
-                $bank->update(["bank_name" => $bName[1]]);
-            }
-        }
+        // $banks = Bank::get();
+        // foreach($banks as $bank){
+        //     $bName = explode(',',$bank->bank_name);
+        //     if(count($bName)  == 2 ){
+        //         $bank->update(["bank_name" => $bName[1]]);
+        //     }
+        // }
     }
 
 
