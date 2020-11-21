@@ -29,14 +29,28 @@ class AppConstants
 
     const PAGINATION_VAL = 20;
 
-    const PENDING_TRANSACTION = 0;
-    const SUCCESSFUL_TRANSACTION = 1;
-    const FAILED_TRANSACTION = 2;
-    const CANCELLED_TRANSACTION = 3;
     const GG_PROVIDER = 'google';
     const FB_PROVIDER = 'facebook';
 
     const PAGINATION_SIZE_WEB = 50;
+
+
+    const DEBIT_TRANSACTION = 0;
+    const CREDIT_TRANSACTION = 1;
+
+    const PENDING_TRANSACTION = 0;
+    const COMPLETED_TRANSACTION = 1;
+    const FAILED_TRANSACTION = 2;
+    const CANCELLED_TRANSACTION = 3;
+
+    const COUPON_TRANSACTION = 1;
+    const WITHDRAW_TRANSACTION = 2;
+    const ACTIVATE_REF_ACCOUNT_TRANSACTION = 3;
+
+    const DIRECT_REFERRAL_BONUS = 10;
+    const INDIRECT_REFERRAL_BONUS = 2;
+    const REFERRAL_ACTIVATION_FEE = 200;
+
 
 
 

@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Referral;
 use App\Traits\Coupon;
+use App\Transaction;
+
 class HomeController extends Controller
 {
     /**
@@ -26,6 +28,12 @@ class HomeController extends Controller
         //         $bank->update(["bank_name" => $bName[1]]);
         //     }
         // }
+        $transactions = Transaction::get();
+        foreach ($transactions as $transaction) {
+            $transaction->type = $transaction->type == "Debit" ? AppConstants::DEBIT_TRANSACTION : AppConstants::CREDIT_TRANSACTION;
+            $transaction->status = AppConstants::COMPLETED_TRANSACTION;
+            $transaction->save();
+        }
     }
 
 

@@ -61,7 +61,7 @@ Route::namespace('User')->middleware("auth")->group(function(){
 
     Route::middleware("complete_profile")->group(function(){
         Route::get('/home', 'HomeController@index')->name('home');
-        Route::post('/activate-referral', 'HomeController@activateReferralAccount')->name('user.activate.referral');
+        Route::post('/activate-referral', 'AccountController@activateReferralAccount')->name('user.activate.referral');
 
         Route::middleware("referral_complete")->prefix('user')->as('user.')->group(function(){
 

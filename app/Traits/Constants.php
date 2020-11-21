@@ -132,6 +132,9 @@ trait Constants
     public $cancelledStatus = 6;
 
 
+    
+
+
 
 
     /**Get status of model */

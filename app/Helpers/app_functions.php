@@ -483,8 +483,8 @@ function processReferral(User $user, User $ref, $ref_direct = 0)
             'referrer_id' => $ref->id,
             'type' => 0,
             'status' => AppConstants::PENDING_TRANSACTION,
-            'parent_points' => 2,
-            'my_points' => 10,
+            'parent_points' => AppConstants::INDIRECT_REFERRAL_BONUS,
+            'my_points' => AppConstants::DIRECT_REFERRAL_BONUS,
             'ref_direct' => $ref_direct,
         ]);
     

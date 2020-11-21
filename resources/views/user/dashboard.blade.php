@@ -92,7 +92,7 @@
                                         <div class="form-row">
                                             <div class="col-md-9">
                                                 <div class="form-group">
-                                                    <input type="text" name="code" class="form-control" placeholder="Enter coupon code">
+                                                    Kindly deposit up to NGN200 into your account and press the activate button!
                                                 </div>
                                             </div>
                                             <div class="col-md-3">

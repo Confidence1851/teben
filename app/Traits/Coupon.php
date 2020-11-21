@@ -23,7 +23,7 @@ class Coupon
             // Check if code is valid
             if (empty($coupon)) {
                 return [
-                    "status" => false,
+                    "success" => false,
                     "msg" => "Invalid coupon code!"
                 ];
             }
@@ -32,12 +32,12 @@ class Coupon
                 if (!empty($coupon->user_id)) {
                     if ($coupon->user_id == $user->id) {
                         return [
-                            "status" => false,
+                            "success" => false,
                             "msg" => "Coupon has been used by you!"
                         ];
                     } else {
                         return [
-                            "status" => false,
+                            "success" => false,
                             "msg" => "Sorry, coupon has been used!"
                         ];
                     }
@@ -46,19 +46,19 @@ class Coupon
             } else {
                 if ($coupon->amount < $schoolAccount->amount) {
                     return [
-                        "status" => false,
+                        "success" => false,
                         "msg" => "Coupon value is less than required amount!"
                     ];
                 }
                 if (!empty($coupon->school_account_id)) {
                     if ($coupon->school_account_id == $schoolAccount->id) {
                         return [
-                            "status" => false,
+                            "success" => false,
                             "msg" => "Coupon has been used by you!"
                         ];
                     } else {
                         return [
-                            "status" => false,
+                            "success" => false,
                             "msg" => "Sorry, coupon has been used!"
                         ];
                     }
@@ -91,7 +91,7 @@ class Coupon
         } catch (Exception $e) {
             DB::rollback();
             return [
-                "status" => false,
+                "success" => false,
                 "msg" => "An error occurred!"
             ];
         }
