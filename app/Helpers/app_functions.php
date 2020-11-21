@@ -14,36 +14,36 @@ function developerAccount()
     return User::where("email", "ugoloconfidence@gmail.com")->first();
 }
 
- function getTerms($term = null)
- {
-     $terms = [
-         1 => 'First',
-         2 => 'Second',
-         3 => 'Third',
-     ];
-     if (!is_null($term)) {
-         return  array_key_exists($term, $terms) ?  $terms[$term] :  null;
-     }
-     return $terms;
- }
+function getTerms($term = null)
+{
+    $terms = [
+        1 => 'First',
+        2 => 'Second',
+        3 => 'Third',
+    ];
+    if (!is_null($term)) {
+        return  array_key_exists($term, $terms) ?  $terms[$term] :  null;
+    }
+    return $terms;
+}
 
 
- function getLevels($level = null)
- {
-     $levels = [
+function getLevels($level = null)
+{
+    $levels = [
         1 => 'Lower Primary',
         2 => 'Upper Primary',
         3 => 'Junior Secondary',
         4 => 'Senior Secondary',
         5 => 'WAEC',
         6 => 'JUPEB',
-        7 =>'A Level'
+        7 => 'A Level'
     ];
-     if (!is_null($level)) {
-         return  array_key_exists($level, $levels) ?  $levels[$level] :  null;
-     }
-     return $levels;
- }
+    if (!is_null($level)) {
+        return  array_key_exists($level, $levels) ?  $levels[$level] :  null;
+    }
+    return $levels;
+}
 
 
 
@@ -56,7 +56,7 @@ function getRandomToken($length, $typeInt = true, $min = null)
 {
     if ($typeInt) {
         $token = "";
-        $ints = [0,1,2,3,4,5,6,7,8,9];
+        $ints = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         for ($i = 0; $i < $length; $i++) {
             $token .= array_rand($ints, 1);
         }
@@ -64,15 +64,15 @@ function getRandomToken($length, $typeInt = true, $min = null)
     } else {
         $token = "";
         $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        $codeAlphabet.= "abcdefghijklmnopqrstuvwxyz";
-        $codeAlphabet.= "0123456789";
+        $codeAlphabet .= "abcdefghijklmnopqrstuvwxyz";
+        $codeAlphabet .= "0123456789";
         $max = strlen($codeAlphabet);
-    
-        for ($i=0; $i < $length; $i++) {
-            $token .= $codeAlphabet[random_int(0, $max-1)];
+
+        for ($i = 0; $i < $length; $i++) {
+            $token .= $codeAlphabet[random_int(0, $max - 1)];
         }
     }
-    
+
     return $token;
 }
 
@@ -80,7 +80,7 @@ function getRandomToken($length, $typeInt = true, $min = null)
 /**Puts file in a public storage */
 function putFileInStorage($file, $path)
 {
-    $filename = uniqid().'.'.$file->getClientOriginalExtension();
+    $filename = uniqid() . '.' . $file->getClientOriginalExtension();
     $file->storeAs($path, $filename);
     return $filename;
 }
@@ -88,7 +88,7 @@ function putFileInStorage($file, $path)
 /**Puts file in a private storage */
 function putFileInPrivateStorage($file, $path)
 {
-    $filename = uniqid().'.'.$file->getClientOriginalExtension();
+    $filename = uniqid() . '.' . $file->getClientOriginalExtension();
     Storage::putFileAs($path, $file, $filename, 'private');
     return $filename;
 }
@@ -110,8 +110,8 @@ function resizeImageandSave($image, $path, $disk = 'local', $width = 300, $heigh
     $background->insert($img, 'center');
 
     // save
-    $filename = uniqid().'.'.$image->getClientOriginalExtension();
-    $path = $path.'/'.$filename;
+    $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+    $path = $path . '/' . $filename;
     Storage::disk($disk)->put($path, (string) $background->encode());
     return $filename;
 }
@@ -119,7 +119,7 @@ function resizeImageandSave($image, $path, $disk = 'local', $width = 300, $heigh
 // Returns full public path
 function my_asset($path = null)
 {
-    return route('index').env('ASSET_URL').'/'.$path;
+    return route('index') . env('ASSET_URL') . '/' . $path;
 }
 
 
@@ -157,7 +157,7 @@ function downloadFileFromPrivateStorage($path, $name)
     if ($exists) {
         $type = Storage::mimeType($path);
         $ext = explode('.', $path)[1];
-        $display_name = $name.'.'.$ext;
+        $display_name = $name . '.' . $ext;
         // dd($display_name);
         $headers = [
             'Content-Type' => $type,
@@ -217,265 +217,259 @@ function bytesToHuman($bytes)
  */
 function getFileType(String $type)
 {
-    $imageTypes = imageMimes() ;
+    $imageTypes = imageMimes();
     if (strpos($imageTypes, $type) !== false) {
         return 'Image';
     }
 
-    $videoTypes = videoMimes() ;
+    $videoTypes = videoMimes();
     if (strpos($videoTypes, $type) !== false) {
         return 'Video';
     }
 
-    $docTypes = docMimes() ;
+    $docTypes = docMimes();
     if (strpos($docTypes, $type) !== false) {
         return 'Document';
     }
 }
 
-    function imageMimes()
-    {
-        return "image/jpeg,image/png,image/jpg,image/svg";
+function imageMimes()
+{
+    return "image/jpeg,image/png,image/jpg,image/svg";
+}
+
+function videoMimes()
+{
+    return "video/x-flv,video/mp4,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi";
+}
+
+function docMimes()
+{
+    return "application/pdf,application/docx,application/doc";
+}
+
+
+function formatTime($minutes)
+{
+    $seconds = $minutes * 60;
+    $dtF = new DateTime("@0");
+    $dtT = new DateTime("@$seconds");
+    $a = $dtF->diff($dtT)->format('%a');
+    $h = $dtF->diff($dtT)->format('%h');
+    $i = $dtF->diff($dtT)->format('%i');
+    $s = $dtF->diff($dtT)->format('%s');
+    if ($a > 0) {
+        return $dtF->diff($dtT)->format('%a days, %h hrs, %i mins and %s secs');
+    } elseif ($h > 0) {
+        return $dtF->diff($dtT)->format('%h hrs, %i mins ');
+    } elseif ($i > 0) {
+        return $dtF->diff($dtT)->format(' %i mins');
+    } else {
+        return $dtF->diff($dtT)->format('%s seconds');
+    }
+}
+
+
+
+function getUserProfileStatuses($user = null, $current = false)
+{
+    if (empty($user)) {
+        $user = auth()->user();
     }
 
-    function videoMimes()
-    {
-        return "video/x-flv,video/mp4,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi";
-    }
+    $user_stats = [
+        // "user_profile" => [
+        //     "key" => "user_profile",
+        //     "current" => null,
+        //     "status" => !empty($user->gender) &&
+        //                 !empty($user->country_id) &&
+        //                 !empty($user->state_id) &&
+        //                 !empty($user->city_id) &&
+        //                 // !empty($user->lga_id) &&
+        //                 // !empty($user->address) &&
+        //                 !empty($user->phone) ,
+        //     "title" => "Complete Profile",
+        // ],
 
-    function docMimes()
-    {
-        return "application/pdf,application/docx,application/doc";
-    }
+        // "next_kin" => [
+        //     "key" => "next_kin",
+        //     "current" => null,
+        //     "status" => !empty($user->kin),
+        //     "title" => "Next of Kin",
+        // ],
+    ];
 
+    $company_stats = [
+        "company_profile" => [
+            "key" => "company_profile",
+            "current" => null,
+            "status" => !empty($user->company),
+            "title" => "Company Profile",
+        ],
+    ];
 
-    function formatTime($minutes)
-    {
-        $seconds = $minutes * 60;
-        $dtF = new DateTime("@0");
-        $dtT = new DateTime("@$seconds");
-        $a=$dtF->diff($dtT)->format('%a');
-        $h=$dtF->diff($dtT)->format('%h');
-        $i=$dtF->diff($dtT)->format('%i');
-        $s=$dtF->diff($dtT)->format('%s');
-        if ($a>0) {
-            return $dtF->diff($dtT)->format('%a days, %h hrs, %i mins and %s secs');
-        } elseif ($h>0) {
-            return $dtF->diff($dtT)->format('%h hrs, %i mins ');
-        } elseif ($i>0) {
-            return $dtF->diff($dtT)->format(' %i mins');
-        } else {
-            return $dtF->diff($dtT)->format('%s seconds');
-        }
-    }
-
-
-      
-    function getUserProfileStatuses($user = null, $current = false)
-    {
-        if (empty($user)) {
-            $user = auth()->user();
-        }
-
-        $user_stats = [
-            // "user_profile" => [
-            //     "key" => "user_profile",
-            //     "current" => null,
-            //     "status" => !empty($user->gender) &&
-            //                 !empty($user->country_id) &&
-            //                 !empty($user->state_id) &&
-            //                 !empty($user->city_id) &&
-            //                 // !empty($user->lga_id) &&
-            //                 // !empty($user->address) &&
-            //                 !empty($user->phone) ,
-            //     "title" => "Complete Profile",
-            // ],
-
-            // "next_kin" => [
-            //     "key" => "next_kin",
-            //     "current" => null,
-            //     "status" => !empty($user->kin),
-            //     "title" => "Next of Kin",
-            // ],
-        ];
-
-        $company_stats = [
-            "company_profile" => [
-                "key" => "company_profile",
-                "current" => null,
-                "status" => !empty($user->company),
-                "title" => "Company Profile",
-            ],
-        ];
-
-        $default_stats = [
-            // "email" => [
-            //     "key" => "email",
-            //     "current" => null,
-            //     "status" => !empty($user->email_verified_at),
-            //     "title" => "Verify Email Address",
-            // ],
-            "role" => [
-                "key" => "role",
-                "current" => null,
-                "status" => ucfirst($user->role) != ucfirst(AppConstants::UNDEFINED_USER_TYPE),
-                "title" => "Select Your Role",
-            ],
-        ];
+    $default_stats = [
+        // "email" => [
+        //     "key" => "email",
+        //     "current" => null,
+        //     "status" => !empty($user->email_verified_at),
+        //     "title" => "Verify Email Address",
+        // ],
+        "role" => [
+            "key" => "role",
+            "current" => null,
+            "status" => ucfirst($user->role) != ucfirst(AppConstants::UNDEFINED_USER_TYPE),
+            "title" => "Select Your Role",
+        ],
+    ];
 
 
-        $statuses = array_merge(
-            $default_stats,
-            $user->role ==  AppConstants::DEFAULT_USER_TYPE ? $user_stats : [],
-            // $user->role ==  AppConstants::COMPANY_USER_TYPE ? $company_stats : [],
-        );
+    $statuses = array_merge(
+        $default_stats,
+        $user->role ==  AppConstants::DEFAULT_USER_TYPE ? $user_stats : [],
+        // $user->role ==  AppConstants::COMPANY_USER_TYPE ? $company_stats : [],
+    );
 
 
-        if ($current) {
-            foreach ($statuses as $key => $value) {
-                if ($value["status"] == false) {
-                    return $statuses[$key];
-                }
-            }
-            $user->status = 1;
-            $user->save();
-            return true;
-        }
-
-        return $statuses;
-    }
-
-
-
-    function getStates()
-    {
-        return [];
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://locationsng-api.herokuapp.com/api/v1/states",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-             CURLOPT_TIMEOUT => 30000,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            // CURLOPT_HTTPHEADER => array(
-            // 	// Set Here Your Requesred Headers
-
-            // ),
-        ));
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-
-        if ($err) {
-            // echo "cURL Error #:" . $err;
-        } else {
-            $result = json_decode($response);
-            $returnData = $result;
-            // foreach($returnData as $r){
-            //     dump($r->name);
-            // }
-            // dd('done');
-
-            return $returnData ;
-        }
-    }
-
-
-    function getLgas($state)
-    {
-        return [];
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "http://locationsng-api.herokuapp.com/api/v1/states/".$state."/details",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-             CURLOPT_TIMEOUT => 30000,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            // CURLOPT_HTTPHEADER => array(
-            // 	// Set Here Your Requesred Headers
-
-            // ),
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-
-        if ($err) {
-            // echo "cURL Error #:" . $err;
-        } else {
-            $result = json_decode($response);
-            $returnData = $result;
-            // foreach($returnData as $r){
-            //     dump($r->name);
-            // }
-            // dd('done');
-
-            return $returnData ;
-        }
-    }
-
-
-    function refWallet($user)
-    {
-        return RefWallet::firstOrCreate([
-            "user_id" => $user->id,
-            "name" => "referral_wallet"
-        ]);
-    }
-
-
-    function getUserRefData(
-        User $user,
-        $direct_refs = 0,
-        $indirect_refs = 0,
-        $direct_earns = 0,
-        $indirect_earns = 0
-    ) {
-        $downlines = User::whereIn("id", $user->downlines->pluck("user_id"))->get();
-
-        if ($direct_refs == 0) {
-            $direct_refs = $downlines->count();
-            $direct_earns = $direct_refs * 10;
-        }
-
-
-        foreach ($downlines as $downline) {
-            if ($downline->downlines->count() > 0) {
-                $downlineData = getUserRefData($downline, $direct_refs, $indirect_refs, $direct_earns, $indirect_earns);
-                $indirect_refs += $downline->downlines->count();
-                $indirect_earns += $downline->downlines->count() * 2;
+    if ($current) {
+        foreach ($statuses as $key => $value) {
+            if ($value["status"] == false) {
+                return $statuses[$key];
             }
         }
-
-        $total_earns = $direct_earns + $indirect_earns;
-        return [
-            "user" => $user,
-            "direct_refs" => $direct_refs,
-            "indirect_refs" => $indirect_refs,
-            "direct_earns" => $direct_earns,
-            "indirect_earns" => $indirect_earns,
-            "total_earns" => $total_earns,
-            "progress" => ($total_earns * 100) / 1000
-        ];
+        $user->status = 1;
+        $user->save();
+        return true;
     }
 
-    function downlineUsers($user)
-    {
-        $downlines = User::whereIn("id", $user->downlines->pluck("user_id"))->get();
-        foreach ($downlines as $downline) {
+    return $statuses;
+}
+
+
+
+function getStates()
+{
+    return [];
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "http://locationsng-api.herokuapp.com/api/v1/states",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_TIMEOUT => 30000,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        // CURLOPT_HTTPHEADER => array(
+        // 	// Set Here Your Requesred Headers
+
+        // ),
+    ));
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        // echo "cURL Error #:" . $err;
+    } else {
+        $result = json_decode($response);
+        $returnData = $result;
+        // foreach($returnData as $r){
+        //     dump($r->name);
+        // }
+        // dd('done');
+
+        return $returnData;
+    }
+}
+
+
+function getLgas($state)
+{
+    return [];
+
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => "http://locationsng-api.herokuapp.com/api/v1/states/" . $state . "/details",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_TIMEOUT => 30000,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        // CURLOPT_HTTPHEADER => array(
+        // 	// Set Here Your Requesred Headers
+
+        // ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    curl_close($curl);
+
+    if ($err) {
+        // echo "cURL Error #:" . $err;
+    } else {
+        $result = json_decode($response);
+        $returnData = $result;
+        // foreach($returnData as $r){
+        //     dump($r->name);
+        // }
+        // dd('done');
+
+        return $returnData;
+    }
+}
+
+
+function refWallet($user)
+{
+    return RefWallet::firstOrCreate([
+        "user_id" => $user->id,
+        "name" => "referral_wallet"
+    ]);
+}
+
+
+function getUserRefData(
+    User $user,
+    $direct_refs = 0,
+    $indirect_refs = 0,
+    $direct_earns = 0,
+    $indirect_earns = 0
+) {
+    $downlines = User::whereIn("id", $user->downlines->pluck("user_id"))->get();
+
+    if ($direct_refs == 0) {
+        $direct_refs = $downlines->count();
+        $direct_earns = $direct_refs * 10;
+    }
+
+
+    foreach ($downlines as $downline) {
+        if ($downline->downlines->count() > 0) {
+            // getUserRefData($downline, $direct_refs, $indirect_refs, $direct_earns, $indirect_earns);
+            $indirect_refs += $downline->downlines->count();
+            $indirect_earns += $downline->downlines->count() * 2;
         }
     }
+
+    $total_earns = $direct_earns + $indirect_earns;
+    return [
+        "user" => $user,
+        "direct_refs" => $direct_refs,
+        "indirect_refs" => $indirect_refs,
+        "direct_earns" => $direct_earns,
+        "indirect_earns" => $indirect_earns,
+        "total_earns" => $total_earns,
+        "progress" => ($total_earns * 100) / 1000
+    ];
+}
+
 
 
 function processReferral(User $user, User $ref, $ref_direct = 0)
 {
-    $record = Referral::where(['user_id' => $user->id,'referrer_id' => $ref->id])->first();
+    $record = Referral::where(['user_id' => $user->id, 'referrer_id' => $ref->id])->first();
     if (empty($record)) {
         $refWallet = refWallet($ref);
         $referral = Referral::create([
@@ -487,11 +481,11 @@ function processReferral(User $user, User $ref, $ref_direct = 0)
             'my_points' => AppConstants::DIRECT_REFERRAL_BONUS,
             'ref_direct' => $ref_direct,
         ]);
-    
+
         $refWallet->amount += $referral->my_points;
         $refWallet->direct_refs += 1;
         $refWallet->save();
-    
+
         if (!empty($upline = optional($ref->referral)->upline)) {
             $upWallet = refWallet($upline);
             $upWallet->amount += $referral->parent_points;
@@ -502,45 +496,50 @@ function processReferral(User $user, User $ref, $ref_direct = 0)
     return $referral ?? $record;
 }
 
-function banksLocalFile(){
+function banksLocalFile()
+{
     return public_path("banks.txt");
 }
 
-function loadBanksListFromSource(){
+function loadBanksListFromSource()
+{
     $client = new \GuzzleHttp\Client(['http_errors' => false]);
     $response = $client->request('GET', 'https://api.paystack.co/bank');
-    $banks =json_decode($response->getBody() );
-    if(file_exists(banksLocalFile())){
+    $banks = json_decode($response->getBody());
+    if (file_exists(banksLocalFile())) {
         unlink(banksLocalFile());
     }
-    file_put_contents(banksLocalFile() , json_encode($banks->data));
+    file_put_contents(banksLocalFile(), json_encode($banks->data));
 }
 
-function getBanksList($index = null){
+function getBanksList($index = null)
+{
     $file = file_get_contents(banksLocalFile());
-    if(empty($file)){
+    if (empty($file)) {
         loadBanksListFromSource();
         return getBanksList($index);
     }
     $banks = json_decode($file);
     $list = [];
-    foreach($banks as $bank){
-       $list[$bank->code] = [
-           "code" => $bank->code,
-           "name" => $bank->name,
-       ];
+    foreach ($banks as $bank) {
+        $list[$bank->code] = [
+            "code" => $bank->code,
+            "name" => $bank->name,
+        ];
     }
-    if(!empty($index) && !array_key_exists($index , $list)) return null;
+    if (!empty($index) && !array_key_exists($index, $list)) {
+        return null;
+    }
     return empty($index) ? $list : $list[$index];
 }
 
 
-function verifyBankAccount($bank_code , $account_no)
+function verifyBankAccount($bank_code, $account_no)
 {
     $client = new \GuzzleHttp\Client(['http_errors' => false]);
-    $header = array('Authorization'=> 'Bearer '.env("PAYSTACK_SECRET_KEY", config("paystack.secret.key")));
-    $link = 'account_number='.$account_no.'&bank_code='.$bank_code ;
-    $request = $client->get("https://api.paystack.co/bank/resolve?".$link, array('headers' => $header ));
+    $header = array('Authorization' => 'Bearer ' . env("PAYSTACK_SECRET_KEY", config("paystack.secret.key")));
+    $link = 'account_number=' . $account_no . '&bank_code=' . $bank_code;
+    $request = $client->get("https://api.paystack.co/bank/resolve?" . $link, array('headers' => $header));
     $return = json_decode($request->getBody());
     return [
         "status" => $return->status,

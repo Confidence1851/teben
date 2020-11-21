@@ -93,6 +93,12 @@ class HomeController extends Controller
             $user = auth()->user();
         }
         $referrals = Referral::where("referrer_id", $user->id)->paginate(10);
-        return view("user.referrals.index", compact('user', 'referrals'));
+        if(auth()->check()){
+            $data = getUserRefData($user);
+        }
+        else{
+            $data = null;
+        }
+        return view("user.referrals.index", compact('user', 'referrals' , 'data'));
     }
 }

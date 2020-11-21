@@ -26,23 +26,19 @@ class AccountController extends Controller
         }
 
         if (!empty($referral)) {
-            // $process = Coupon::recharge($data["code"] , $user);
-            // if(!$process["success"]){
-            //     return back()->with("error_msg" , $process["msg"]);
-            // }
-            // $referral->coupon = $process["coupon"]->code;
-            // $referral->amount = $process["coupon"]->amount;
-            if ($referral->status = $this->activeStatus) {
+            if ($referral->status == $this->activeStatus) {
                 return back()->with("error_msg", "Referral account is already active!");
             }
+            $amount = AppConstants::REFERRAL_ACTIVATION_FEE;
             $process = Wallet::debit(
                 $user->id,
-                AppConstants::REFERRAL_ACTIVATION_FEE,
+                $amount,
                 "Referral account activation",
                 AppConstants::ACTIVATE_REF_ACCOUNT_TRANSACTION,
                 $referral->id
             );
             if ($process["success"]) {
+                $referral->amount = $amount;
                 $referral->status = $this->activeStatus;
                 $referral->save();
                 return back()->with("success_msg", "Account activated successfully!");

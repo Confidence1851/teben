@@ -19,10 +19,7 @@
             <div class="offset-md-2 col-md-8">
                 <div class="form-inner-cont mx-100">
 
-                    @if(auth()->id() == $user->id)
-                        @php
-                            $data = getUserRefData($user);
-                        @endphp
+                    @if(auth()->id() == $user->id)                    
                         <div class="p-3">
                             <div class="card p-3">
                                 <h4 class="mb-3">My Referrals</h4>
@@ -70,6 +67,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="row">
+                                    @if ($referral->user->downlines->count() > 0)
                                         @foreach ($referral->user->downlines as $ref)
                                             <div class="col-4 mb-2 select_role">
                                                 <a href="#" data-toggle="modal" data-target="#referral_user_id{{ $ref->user->id }}">
@@ -84,6 +82,8 @@
                                             @include("user.fragments.modals.referral_user_info" , ["referral" => $ref])
 
                                         @endforeach
+                                    @endif
+
                                 </div>
                             </div>
 
