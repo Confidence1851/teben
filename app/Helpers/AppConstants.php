@@ -49,7 +49,7 @@ class AppConstants
     const MEDIA_DOWNLOAD = 4;
 
     const DIRECT_REFERRAL_BONUS = 10;
-    const INDIRECT_REFERRAL_BONUS = 2;
+    const INDIRECT_REFERRAL_BONUS = 10;
     const REFERRAL_ACTIVATION_FEE = 200;
 
 
