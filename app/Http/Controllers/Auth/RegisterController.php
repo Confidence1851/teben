@@ -79,7 +79,7 @@ class RegisterController extends Controller
             $user = User::create([
                 'name' => $data['name'],
                 'username' => $data['username'],
-                'uuid' => $this->UUid(),
+                'uuid' => getUniqueCode(10 , false ,new User),
                 'role' => AppConstants::UNDEFINED_USER_TYPE,
                 'password' => Hash::make($data['password']),
             ]);
@@ -102,17 +102,7 @@ class RegisterController extends Controller
         }
     }
 
-    public function UUid(){
-        $id = getRandomToken(8 , true);
-        $check = User::where('uuid',$id)->count();
-        if($check < 1){
-            return $id;
-        }
-        else{
-            $this->UUid();
-        }
-    }
-
+   
     public function ref_invite($code){
         $user = User::where('uuid',$code)->first();
         if(empty($user)){
