@@ -91,58 +91,60 @@
                 </div>
               </div>
             <!--Add coupon Modal -->
-                                 <div class="modal fade bd-example-modal-md" id="addcoupon">
-                                    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">New Coupons</h5>
-                                                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form method="post" action="{{ route('coupons.store') }}">@csrf
-                                                    <div class="form-group">
-                                                        <label>Coupon Agent</label>
-                                                        <select class="form-control" required name="agent_id" style="height:45px">
-                                                            <option disabled selected>Select Agent</option>
-                                                            <!--<option value="{{Auth::user()->id}}">Myself (Admin)</option>-->
-                                                            @foreach($agents as $agent)
-                                                                <option value="{{$agent->id}}"> {{ $agent->user->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label>Coupon Price</label>
-                                                        <select class="form-control" required name="amount" style="height:45px" >
-                                                            <!--<option disabled selected>Select Price</option>-->
-                                                            <option value="100">NGN100</option>
-                                                            <option value="200">NGN200</option>
-                                                            <option value="500">NGN500</option>
-                                                            <!--<option value="1000">NGN500</option>-->
-                                                            <!--<option value="2000">NGN500</option>-->
-                                                            <!--<option value="5000">NGN500</option>-->
-                                                            <!--<option value="10000">NGN500</option>-->
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label>Quantity</label>
-                                                        <select class="form-control" name="quantity" style="height:45px" aria-required="true">
-                                                            <option disabled selected>Select Quantity</option>
-                                                            <option value="5">5 Coupons</option>
-                                                            <option value="10">10 Coupons</option>
-                                                            <option value="20">20 Coupons</option>
-                                                            <option value="50">50 Coupons</option>
-                                                            <option value="100">100 Coupons</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-sm btn-primary">Proceed</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="modal fade bd-example-modal-md" id="addcoupon">
+                <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">New Coupons</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="{{ route('coupons.store') }}">@csrf
+                                <div class="form-group">
+                                    <label>Coupon Agent</label>
+                                    <select class="form-control" required name="agent_id" style="height:45px">
+                                        <option disabled selected>Select Agent</option>
+                                        <!--<option value="{{Auth::user()->id}}">Myself (Admin)</option>-->
+                                        @foreach($agents as $agent)
+                                            <option value="{{$agent->id}}"> {{ $agent->user->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+
+                                <div class="form-group">
+                                    <label>Coupon Price</label>
+                                    <select class="form-control" required name="amount" style="height:45px" >
+                                        <option disabled selected>Select Price</option>
+                                        <option value="100">NGN100</option>
+                                        <option value="200">NGN200</option>
+                                        <option value="500">NGN500</option>
+                                        <!--<option value="1000">NGN500</option>-->
+                                        <!--<option value="2000">NGN500</option>-->
+                                        <!--<option value="5000">NGN500</option>-->
+                                        <!--<option value="10000">NGN500</option>-->
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Quantity</label>
+                                    <select class="form-control" name="quantity" style="height:45px" aria-required="true">
+                                        <option disabled selected>Select Quantity</option>
+                                        <option value="1">1 Coupon</option>
+                                        <option value="2">2 Coupons</option>
+                                        <option value="5">5 Coupons</option>
+                                        <option value="10">10 Coupons</option>
+                                        <option value="20">20 Coupons</option>
+                                        <option value="50">50 Coupons</option>
+                                        <option value="100">100 Coupons</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-sm btn-primary">Proceed</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 @endsection

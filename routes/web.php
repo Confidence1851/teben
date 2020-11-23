@@ -151,7 +151,7 @@ Route::post('/transaction-response/{id}', 'HomeController@tranResponse')->name('
 Route::get('/tre', 'HomeController@transReceipts')->name('transReceipts');
 
 Route::prefix('admin')->middleware("admin")->group(function () {
-    Route::get('/', 'Admin\AdminController@index')->name('admin');
+    Route::get('/dashboard', 'Admin\AdminController@index')->name('admin');
 
     Route::get('/users', 'AdminController@users')->name('users');
     Route::post('/users/update/{user}', 'AdminController@update_user')->name('update_user');
