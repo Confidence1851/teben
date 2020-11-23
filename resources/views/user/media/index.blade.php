@@ -6,7 +6,7 @@
 <section class="w3l-skill-breadcrum">
     <div class="breadcrum">
       <div class="container">
-        <p><a href="{{ route('home') }}">Dashboard</a> &nbsp; / &nbsp; Books</p>
+        <p><a href="{{ route('home') }}">Dashboard</a> &nbsp; / &nbsp; {{ $title ?? 'Media' }}</p>
       </div>
     </div>
   </section>
