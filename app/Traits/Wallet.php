@@ -2,10 +2,7 @@
 
 namespace App\Traits;
 
-use App\Coupon as AppCoupon;
 use App\Helpers\AppConstants;
-use App\SchoolAccount;
-use App\Transaction;
 use App\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Wallet
 {
-    public static function debit($user_id, $amount , $narration , $action, $reference_id = null){
+    public static function debit(int $user_id,int $amount ,string $narration ,int $action,int $reference_id = null){
         DB::beginTransaction();
         try{
             $user = User::find($user_id);
@@ -28,16 +25,16 @@ class Wallet
                     ];
                 }
                 $user->save();
-                Transaction::create([
-                    'user_id' => $user->id,
-                    'uuid' => getRandomToken(6),
-                    'amount' => $amount,
-                    'purpose' => $narration,
-                    'type' => AppConstants::DEBIT_TRANSACTION,
-                    'status' => AppConstants::COMPLETED_TRANSACTION,
-                    'action' => $action,
-                    'reference_id' => $reference_id
-                ]);
+                Transaction::store(
+                    $user,
+                    null,
+                    $amount,
+                    $narration,
+                    AppConstants::DEBIT_TRANSACTION,
+                    AppConstants::COMPLETED_TRANSACTION,
+                    $action,
+                    $reference_id
+                );
                 DB::commit();
                 return [
                     "success" => true,
@@ -62,16 +59,16 @@ class Wallet
             if(!empty($user)){
                 $user->wallet += $amount;
                 $user->save();
-                Transaction::create([
-                    'user_id' => $user->id,
-                    'uuid' => getRandomToken(6),
-                    'amount' => $amount,
-                    'purpose' => $narration,
-                    'type' => AppConstants::CREDIT_TRANSACTION,
-                    'status' => AppConstants::COMPLETED_TRANSACTION,
-                    'action' => $action,
-                    'reference_id' => $reference_id
-                ]);
+                Transaction::store(
+                    $user,
+                    null,
+                    $amount,
+                    $narration,
+                    AppConstants::CREDIT_TRANSACTION,
+                    AppConstants::COMPLETED_TRANSACTION,
+                    $action,
+                    $reference_id
+                );
                 DB::commit();
                 return [
                     "success" => true,
@@ -81,6 +78,7 @@ class Wallet
         }
         catch(Exception $e){
             DB::rollback(); 
+            logError($e);
             return [
                 "success" => false,
                 "msg" => "An error occurred!",

@@ -46,6 +46,7 @@ class AppConstants
     const COUPON_TRANSACTION = 1;
     const WITHDRAW_TRANSACTION = 2;
     const ACTIVATE_REF_ACCOUNT_TRANSACTION = 3;
+    const MEDIA_DOWNLOAD = 4;
 
     const DIRECT_REFERRAL_BONUS = 10;
     const INDIRECT_REFERRAL_BONUS = 2;

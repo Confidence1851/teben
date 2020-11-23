@@ -18,6 +18,7 @@
       <div class="row">
             <div class="offset-md-2 col-md-8">
                 <div class="form-inner-cont mx-100">
+                    @include("admin.layout.flash_message")
                     <div class="row">
                         <div class="col-md-2 h4"><b>{{ $title ?? '' }}</b></div>
                         <div class="col-md-10">

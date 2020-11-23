@@ -8,83 +8,97 @@ use App\Http\Controllers\Controller;
 use App\PayReceipt;
 use App\Traits\Coupon;
 use App\Traits\Wallet;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
     public function activateReferralAccount(Request $request)
     {
-        // $data = $request->validate([
-        //     "code" => "required|string",
-        // ]);
-
-        $user = auth()->user();
-        $referral = $user->referral;
+        DB::beginTransaction();
+        try {
+            $user = auth()->user();
+            $referral = $user->referral;
         
-        if (empty($referral)) {
-            $referral = processReferral($user, developerAccount(), 0);
-        }
+            if (empty($referral)) {
+                $referral = processReferral($user, developerAccount(), 0);
+            }
 
-        if (!empty($referral)) {
-            if ($referral->status == $this->activeStatus) {
-                return back()->with("error_msg", "Referral account is already active!");
+            if (!empty($referral)) {
+                if ($referral->status == $this->activeStatus) {
+                    return back()->with("error_msg", "Referral account is already active!");
+                }
+                $amount = AppConstants::REFERRAL_ACTIVATION_FEE;
+                $process = Wallet::debit(
+                    $user->id,
+                    $amount,
+                    "Referral account activation",
+                    AppConstants::ACTIVATE_REF_ACCOUNT_TRANSACTION,
+                    $referral->id
+                );
+                if ($process["success"]) {
+                    $referral->amount = $amount;
+                    $referral->status = $this->activeStatus;
+                    $referral->save();
+                    return back()->with("success_msg", "Account activated successfully!");
+                } else {
+                    return back()->with("error_msg", $process["msg"]);
+                }
             }
-            $amount = AppConstants::REFERRAL_ACTIVATION_FEE;
-            $process = Wallet::debit(
-                $user->id,
-                $amount,
-                "Referral account activation",
-                AppConstants::ACTIVATE_REF_ACCOUNT_TRANSACTION,
-                $referral->id
-            );
-            if ($process["success"]) {
-                $referral->amount = $amount;
-                $referral->status = $this->activeStatus;
-                $referral->save();
-                return back()->with("success_msg", "Account activated successfully!");
-            } else {
-                return back()->with("error_msg", $process["msg"]);
-            }
+            return back()->with("error_msg", "Referral account not found!");
+        } catch (Exception $e) {
+            DB::rollback();
+            logError($e);
+            return back()->with("error_msg", "An error occurred while processing this request!");
         }
-        return back()->with("error_msg", "Referral account not found!");
     }
 
     public function deposit(Request $request)
     {
-        $data = $request->validate([
-            "code" => "nullable|string",
-            'receipt' => 'nullable|image'
-        ]);
+        DB::beginTransaction();
+        try {
+            $data = $request->validate([
+                "code" => "nullable|string",
+                'receipt' => 'nullable|image'
+            ]);
 
-        $user = auth()->user();
-        if (!empty($data["code"])) {
-            $process = Coupon::recharge($data["code"], $user);
-            if (!$process["success"]) {
-                return back()->with("error_msg", $process["msg"]);
-            }
-            $process1 = Wallet::credit(
-                $user->id,
-                $process["coupon"]->amount,
-                "Coupon recharge successful",
-                AppConstants::COUPON_TRANSACTION,
-                $process["coupon"]->id,
-            );
-            if ($process1["success"]) {
-                return back()->with("success_msg", "Account credited successfully!");
-            } else {
-                return back()->with("success_msg", $process1["msg"]);
-            }
-        } elseif (!empty($data["receipt"])) {
-            $image = $request->file('receipt');
-            $filename = putFileInPrivateStorage($image, $this->receiptImagePath);
-            $data['user_id'] = $user->id;
-            $data['image'] = $filename;
-            $data['type'] = 'Uploaded';
+            $user = auth()->user();
+            if (!empty($data["code"])) {
+                $process = Coupon::recharge($data["code"], $user);
+                if (!$process["success"]) {
+                    return back()->with("error_msg", $process["msg"]);
+                }
+                $process1 = Wallet::credit(
+                    $user->id,
+                    $process["coupon"]->amount,
+                    "Coupon recharge successful",
+                    AppConstants::COUPON_TRANSACTION,
+                    $process["coupon"]->id,
+                );
+                if ($process1["success"]) {
+                    DB::commit();
+                    return back()->with("success_msg", "Account credited successfully!");
+                } else {
+                    return back()->with("success_msg", $process1["msg"]);
+                }
+            } elseif (!empty($data["receipt"])) {
+                $image = $request->file('receipt');
+                $filename = putFileInPrivateStorage($image, $this->receiptImagePath);
+                $data['user_id'] = $user->id;
+                $data['image'] = $filename;
+                $data['type'] = 'Uploaded';
     
-            PayReceipt::create($data);
-            return redirect()->back()->with("success_msg", "Receipt uploaded, deposit would be processed soon!!");
-        } else {
-            return back()->with("error_msg", "Please provide either a coupon code or upload a receipt of your bank payment to process deposit!");
+                PayReceipt::create($data);
+                DB::commit();
+                return redirect()->back()->with("success_msg", "Receipt uploaded, deposit would be processed soon!!");
+            } else {
+                return back()->with("error_msg", "Please provide either a coupon code or upload a receipt of your bank payment to process deposit!");
+            }
+        } catch (Exception $e) {
+            DB::rollback();
+            logError($e);
+            return back()->with("error_msg", "An error occurred while processing this request!");
         }
     }
 

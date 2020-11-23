@@ -28,12 +28,18 @@ class HomeController extends Controller
         //         $bank->update(["bank_name" => $bName[1]]);
         //     }
         // }
-        $transactions = Transaction::get();
-        foreach ($transactions as $transaction) {
-            $transaction->type = $transaction->type == "Debit" ? AppConstants::DEBIT_TRANSACTION : AppConstants::CREDIT_TRANSACTION;
-            $transaction->status = AppConstants::COMPLETED_TRANSACTION;
-            $transaction->save();
-        }
+        // $transactions = Transaction::get();
+        // foreach ($transactions as $transaction) {
+        //     // $transaction->type = $transaction->type == "Debit" ? AppConstants::DEBIT_TRANSACTION : AppConstants::CREDIT_TRANSACTION;
+        //     // $transaction->status = AppConstants::COMPLETED_TRANSACTION;
+        //     $transaction->uuid = getUniqueCode(6 , true ,new Transaction);
+        //     $transaction->save();
+        // }
+        // $users = User::get();
+        // foreach ($users as $user) {
+        //     $user->uuid = getUniqueCode(10 , false ,new User);
+        //     $user->save();
+        // }
     }
 
 

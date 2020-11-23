@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <form action="{{ route("user.account.deposit") }}" method="post" enctype="multipart/form-data"> {{csrf_field()}}
                         <label>Use Coupon Code</label>
-                        <input type="number" class="form-control" name="code" required>
+                        <input type="text" class="form-control" name="code" required>
                         <button type="submit" class="btn btn-success mt-2">Proceed</button>
                     </form>
                 </div>

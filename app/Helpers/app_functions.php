@@ -4,6 +4,7 @@ use App\Helpers\AppConstants;
 use App\Referral;
 use App\RefWallet;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -545,4 +546,24 @@ function verifyBankAccount($bank_code, $account_no)
         "status" => $return->status,
         "account_name" => $return->data->account_name ?? null,
     ];
+}
+
+
+
+
+function getUniqueCode($length ,bool $typeInt,Model $model , $column = "uuid"){
+    $code = getRandomToken($length , $typeInt);
+    if($model->getConnection()->getSchemaBuilder()->hasColumn($model->getTable() , $column)){
+        $check = $model->where($column , $code)->count();
+        if($check > 0){
+            getUniqueCode($length , $typeInt, $model , $column);
+        }
+        return $code;
+    }
+    return $code;
+}
+
+
+function logError(Exception $e){
+    logger($e->getMessage() , $e->getTrace());
 }

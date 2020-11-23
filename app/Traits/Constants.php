@@ -267,5 +267,7 @@ trait Constants
     public $courseTestAnswerPath = 'files/course/tests/answers';
 
 
+
+
 }
 
