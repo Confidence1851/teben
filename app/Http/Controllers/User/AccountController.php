@@ -41,6 +41,7 @@ class AccountController extends Controller
                     $referral->amount = $amount;
                     $referral->status = $this->activeStatus;
                     $referral->save();
+                    DB::commit();
                     return back()->with("success_msg", "Account activated successfully!");
                 } else {
                     return back()->with("error_msg", $process["msg"]);
