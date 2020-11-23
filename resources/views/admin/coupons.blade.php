@@ -36,7 +36,7 @@
                             @if(empty($coupon->user_id) && empty($coupon->school_account_id))
                                 <td class="align-middle">Not yet</td>
                             @else
-                                <td class="align-middle">{{$coupon->user->name}}</td>
+                                <td class="align-middle">{{optional($coupon->user)->name}}</td>
                             @endif
                             <td>
                                 @if(empty($coupon->user_id) && empty($coupon->school_account_id))
@@ -115,6 +115,8 @@
                                                         <label>Coupon Price</label>
                                                         <select class="form-control" required name="amount" style="height:45px" >
                                                             <!--<option disabled selected>Select Price</option>-->
+                                                            <option value="100">NGN100</option>
+                                                            <option value="200">NGN200</option>
                                                             <option value="500">NGN500</option>
                                                             <!--<option value="1000">NGN500</option>-->
                                                             <!--<option value="2000">NGN500</option>-->
