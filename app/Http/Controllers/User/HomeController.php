@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Bank;
+use App\Coupon as AppCoupon;
 use App\User;
 use App\Helpers\AppConstants;
 use App\Http\Controllers\Controller;
@@ -30,8 +31,8 @@ class HomeController extends Controller
         // }
         // $transactions = Transaction::get();
         // foreach ($transactions as $transaction) {
-        //     // $transaction->type = $transaction->type == "Debit" ? AppConstants::DEBIT_TRANSACTION : AppConstants::CREDIT_TRANSACTION;
-        //     // $transaction->status = AppConstants::COMPLETED_TRANSACTION;
+        //     $transaction->type = $transaction->type == "Debit" ? AppConstants::DEBIT_TRANSACTION : AppConstants::CREDIT_TRANSACTION;
+        //     $transaction->status = AppConstants::COMPLETED_TRANSACTION;
         //     $transaction->uuid = getUniqueCode(6 , true ,new Transaction);
         //     $transaction->save();
         // }
@@ -39,6 +40,14 @@ class HomeController extends Controller
         // foreach ($users as $user) {
         //     $user->uuid = getUniqueCode(10 , false ,new User);
         //     $user->save();
+        // }
+
+        // $coupons = AppCoupon::get();
+        // foreach ($coupons as $coupon) {
+        //     if(!empty($coupons->user_id) || !empty($coupon->school_account_id)){
+        //         $coupon->use_date = $coupon->updated_at;
+        //         $coupon->save();
+        //     }
         // }
     }
 
