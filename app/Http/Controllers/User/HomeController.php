@@ -49,6 +49,12 @@ class HomeController extends Controller
         //         $coupon->save();
         //     }
         // }
+
+        $referrals = Referral::get();
+        foreach ($referrals as $referral) {
+            $referral->parent_points = AppConstants::INDIRECT_REFERRAL_BONUS;
+            $referral->save();
+        }
     }
 
 
