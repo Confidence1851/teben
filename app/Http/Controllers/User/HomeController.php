@@ -57,11 +57,11 @@ class HomeController extends Controller
         //     $referral->save();
         // }
 
-        $refWallets = RefWallet::get();
-        foreach ($refWallets as $wallet) {
-            $wallet->amount = ($wallet->direct_refs + $wallet->indirect_refs) * 10 ;
-            $wallet->save();
-        }
+        // $refWallets = RefWallet::get();
+        // foreach ($refWallets as $wallet) {
+        //     $wallet->amount = ($wallet->direct_refs + $wallet->indirect_refs) * 10 ;
+        //     $wallet->save();
+        // }
     }
 
 

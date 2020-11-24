@@ -442,7 +442,7 @@ function getUserRefData(
 
     if ($direct_refs == 0) {
         $direct_refs = $downlines->count();
-        $direct_earns = $direct_refs * 10;
+        $direct_earns = $direct_refs * AppConstants::DIRECT_REFERRAL_BONUS;
     }
 
 
@@ -450,7 +450,7 @@ function getUserRefData(
         if ($downline->downlines->count() > 0) {
             // getUserRefData($downline, $direct_refs, $indirect_refs, $direct_earns, $indirect_earns);
             $indirect_refs += $downline->downlines->count();
-            $indirect_earns += $downline->downlines->count() * 2;
+            $indirect_earns += $downline->downlines->count() * AppConstants::INDIRECT_REFERRAL_BONUS;
         }
     }
 
