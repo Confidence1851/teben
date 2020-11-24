@@ -9,6 +9,7 @@ use App\Helpers\AppConstants;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Referral;
+use App\RefWallet;
 use App\Traits\Coupon;
 use App\Transaction;
 
@@ -50,10 +51,16 @@ class HomeController extends Controller
         //     }
         // }
 
-        $referrals = Referral::get();
-        foreach ($referrals as $referral) {
-            $referral->parent_points = AppConstants::INDIRECT_REFERRAL_BONUS;
-            $referral->save();
+        // $referrals = Referral::get();
+        // foreach ($referrals as $referral) {
+        //     $referral->parent_points = AppConstants::INDIRECT_REFERRAL_BONUS;
+        //     $referral->save();
+        // }
+
+        $refWallets = RefWallet::get();
+        foreach ($refWallets as $wallet) {
+            $wallet->amount = ($wallet->direct_refs + $wallet->indirect_refs) * 10 ;
+            $wallet->save();
         }
     }
 
