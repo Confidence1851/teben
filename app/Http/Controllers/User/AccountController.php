@@ -41,6 +41,15 @@ class AccountController extends Controller
                     $referral->amount = $amount;
                     $referral->status = $this->activeStatus;
                     $referral->save();
+
+                    Wallet::credit (
+                        $user->id,
+                        $amount,
+                        "Account activation bonus",
+                        AppConstants::ACTIVATE_REF_ACCOUNT_TRANSACTION,
+                        $referral->id
+                    );
+
                     DB::commit();
                     return back()->with("success_msg", "Account activated successfully!");
                 } else {
