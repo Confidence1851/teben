@@ -438,6 +438,7 @@ function getUserRefData(
     $direct_earns = 0,
     $indirect_earns = 0
 ) {
+    
     $downlines = User::whereIn("id", $user->downlines->pluck("user_id"))->get();
 
     if ($direct_refs == 0) {
@@ -447,10 +448,16 @@ function getUserRefData(
 
 
     foreach ($downlines as $downline) {
-        if ($downline->downlines->count() > 0) {
-            getUserRefData($downline, $direct_refs, $indirect_refs, $direct_earns, $indirect_earns);
-            $indirect_refs += $downline->downlines->count();
-            $indirect_earns += $downline->downlines->count() * AppConstants::INDIRECT_REFERRAL_BONUS;
+        $count = $downline->downlines->count();
+        if ( $user->id != $downline->id && $count > 0) {
+            $indirect_refs += $count;
+            $indirect_earns += $count * AppConstants::INDIRECT_REFERRAL_BONUS;
+
+            $data = getUserRefData($downline, $direct_refs, $indirect_refs, $direct_earns, $indirect_earns);
+            $direct_refs = $data["direct_refs"];
+            $indirect_refs = $data["indirect_refs"];
+            $direct_earns = $data["direct_earns"];
+            $indirect_earns = $data["indirect_earns"];
         }
     }
 

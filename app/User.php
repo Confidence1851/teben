@@ -46,7 +46,7 @@ class User extends Authenticatable //implements MustVerifyEmail
     }
 
     public function downlines(){
-        return $this->hasMany(Referral::class , "referrer_id");
+        return $this->hasMany(Referral::class , "referrer_id")->whereNotIn("user_id" , [$this->id]);
     }
 
     public function referral(){
