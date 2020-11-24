@@ -448,7 +448,7 @@ function getUserRefData(
 
     foreach ($downlines as $downline) {
         if ($downline->downlines->count() > 0) {
-            // getUserRefData($downline, $direct_refs, $indirect_refs, $direct_earns, $indirect_earns);
+            getUserRefData($downline, $direct_refs, $indirect_refs, $direct_earns, $indirect_earns);
             $indirect_refs += $downline->downlines->count();
             $indirect_earns += $downline->downlines->count() * AppConstants::INDIRECT_REFERRAL_BONUS;
         }
