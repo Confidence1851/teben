@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Klass;
+use App\Media;
 use Illuminate\Http\Request;
 
 class MyVideoController extends Controller
@@ -12,9 +14,34 @@ class MyVideoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request , $type = "")
     {
-        return view('user.my_videos.index', compact('videos'));
+        $builder = Media::where('status', 'Visible')->where("attachment_type", $type == "books" ? "Document" : "Video")->orderby('title', 'asc');
+
+        if (!empty($key = $request['keyword'])) {
+            $builder = $builder->where('title', 'like', "%$key%")->orWhereHas('subject', function ($query) use ($key) {
+                $query->where('name', 'like', "%$key%");
+            });
+        }
+        if (!empty($key = $request['class'])) {
+            $builder = $builder->where('klass_id', 'like', "%$key%");
+        }
+        if (!empty($key = $request['term'])) {
+            $builder = $builder->where('term', 'like', "%$key%");
+        }
+
+        $user = auth()->user();
+        $media = $builder->paginate(20);
+        $title = ucfirst($type);
+        $url = route("user.media.index", $type);
+        $classes = Klass::orderby("name")->get();
+        $terms = getTerms();
+        $requestData = [
+            "keyword" => $request['keyword'],
+            "class" => $request['class'],
+            "term" => $request['term'],
+        ];
+        return view('user.my_videos.index', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms'));
     }
 
     /**

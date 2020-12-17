@@ -41,7 +41,7 @@ class MediaController extends Controller
         }
 
         $user = auth()->user();
-        $media = $builder->paginate(20);
+        $media = $builder->paginate(30);
         $title = ucfirst($type);
         $url = route("user.media.index", $type);
         $classes = Klass::orderby("name")->get();
@@ -51,7 +51,7 @@ class MediaController extends Controller
             "class" => $request['class'],
             "term" => $request['term'],
         ];
-        return view('user.media.index', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms'));
+        return view('web.pages.media', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms'));
     }
 
 

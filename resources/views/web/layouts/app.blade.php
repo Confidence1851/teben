@@ -70,6 +70,21 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.w3l-offered-courses .price-review p {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.w3l-offered-courses a.course-desc {
+    font-size: 16px;
+    line-height: 20.2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
   </style>
   </head>
   <body>
