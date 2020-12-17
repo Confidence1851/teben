@@ -115,12 +115,14 @@
                         </div>
 
                         <div class="col-md-4 mb-4 select_role">
-                            <div class="card p-4">
-                                <div class="text-center">
-                                    <i class="fa fa-user fs-30"></i>
+                            <a href="{{ route("user.my_videos.index") }}">
+                                <div class="card p-4">
+                                    <div class="text-center">
+                                        <i class="fa fa-user fs-30"></i>
+                                    </div>
+                                    <div class="text-center">My Videos</div>
                                 </div>
-                                <div class="text-center">My Videos</div>
-                            </div>
+                            </a>
                         </div>
 
                         <div class="col-md-4 mb-4 select_role">

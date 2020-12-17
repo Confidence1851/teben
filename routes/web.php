@@ -78,6 +78,12 @@ Route::namespace('User')->middleware("auth")->group(function () {
                 Route::match(["get" , "post"], '/profile', 'AccountController@profile')->name('profile');
                 Route::match(["get" , "post"], '/profile/bank', 'AccountController@bank')->name('profile.bank');
             });
+
+            Route::prefix('my-videos')->as('my_videos.')->group(function () {
+                Route::get('/index', 'MyVideoController@index')->name('index');
+                Route::post('download', 'MyVideoController@download')->name('download');
+                Route::get('/watch/{filename}', 'MyVideoController@watchVideoAttachment')->name('watch.video');
+            });
         });
     });
 });
