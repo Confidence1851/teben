@@ -115,7 +115,7 @@
                         </div>
 
                         <div class="col-md-4 mb-4 select_role">
-                            <a href="{{ route("user.my_videos.index") }}">
+                            <a href="{{ $user->getMyVideosLink() }}">
                                 <div class="card p-4">
                                     <div class="text-center">
                                         <i class="fa fa-user fs-30"></i>

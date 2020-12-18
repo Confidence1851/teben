@@ -19,6 +19,10 @@ class AddNewFieldsToMediaTable extends Migration
                 $table->foreign("author_id")->references("id")->on("users")->nullOnDelete();
             }
             if(!Schema::hasColumn('media', 'description')) $table->longText('description')->after("title");
+            if(!Schema::hasColumn('media', 'canComment')) $table->tinyInteger('canComment')->default(1);
+            if(!Schema::hasColumn('media', 'canLike')) $table->tinyInteger('canLike')->default(1);
+            if(!Schema::hasColumn('media', 'canWatch')) $table->tinyInteger('canWatch')->default(1);
+            if(!Schema::hasColumn('media', 'canDownload')) $table->tinyInteger('canDownload')->default(1);
         });
     }
 

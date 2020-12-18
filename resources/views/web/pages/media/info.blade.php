@@ -19,7 +19,11 @@
 
     <div class="row mt-3">
       <div class="col-md-9">
-        <video src="{{ asset("video.mp4") }}" controls class="img-fluid" id="video_player" ></video>
+        @if ($mediaItem->isVIdeo())
+          <video src="{{ asset("video.mp4") }}" controls class="img-fluid" id="video_player" ></video>
+        @else
+          <div class="img-fluid mediaItem_bg_image" style="background-image: url({{ $mediaItem->getCoverImageUrl() }})" title="{{ $mediaItem->title }}" ></div>
+        @endif
       </div>
       <div class="col-md-3">
         inof

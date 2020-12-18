@@ -33,7 +33,9 @@ class MediaRequest extends FormRequest
         }
         return [
             'id' => 'nullable|string',
+            'author_id' => 'nullable|string|exists:users,id',
             'title' => 'required|string',
+            'description' => 'required|string',
             'level' => 'required|string',
             'klass_id' => 'required|string',
             'subject_id' => 'required|string',
@@ -42,6 +44,10 @@ class MediaRequest extends FormRequest
             'attachment' => 'required_if:id,null|'.$this->valid_attachment(),
             'status' => 'required|string',
             'term' => 'required|string',
+            'canComment' => 'nullable|string|in:0,1',
+            'canLike' => 'nullable|string|in:0,1',
+            'canWatch' => 'nullable|string|in:0,1',
+            'canDownload' => 'nullable|string|in:0,1',
         ];
         
     }

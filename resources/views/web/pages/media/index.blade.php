@@ -71,7 +71,7 @@
           <div class="card">
             <div class="card-header p-0 position-relative">
               <a href="#url" class="zoom d-block">
-                <img class="card-img-bottom d-block" src="{{ $mediaItem->getCoverImageUrl() }}" alt="Card image cap">
+                <img class="card-img-bottom d-block" src="{{ $mediaItem->getCoverImageUrl() }}"  title="{{ $mediaItem->title }}" alt="Media Image" />
               </a>
               <div class="author">
                 <div class="author-image">
@@ -124,27 +124,9 @@
       
       </div>
 
-      <ul class="pagination mt-5 justify-content-center">
-        <li class="page-item">
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#url"> <span class="fa fa-angle-double-left"></span></a>
-        </li>
-        <li class="page-item">
-            <a class="page-link active" href="#url">1</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#url">2</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#url">3</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#url"> <span class="fa fa-angle-double-right"></span></a>
-        </li>
-        <div class="clear"></div>
+    <ul class="pagination mt-5 justify-content-center">
+      {!! $media->withQueryString()->links("vendor.pagination.custom") !!}
     </ul>
-
     </div>
   </div>
 </section>

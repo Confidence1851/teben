@@ -16,22 +16,26 @@ class Media
 
     public function store(array $data)
     {
+        if(!empty($image = $data["image"] ?? null)){
+            $data['image'] = $this->saveCoverImage($image);
+        }
 
-        $cover_filename = $this->saveCoverImage($data["image"] ?? null);
-
-        $attachment = $this->saveAttachment($data["attachment"] ?? null);
-
-        $size = bytesToHuman(File::size($attachment['attachment']));
-        $attachType = getFileType($attachment['type']);
-
-       $data['image'] = $cover_filename;
-       $data['attachment'] = $attachment['filename'];
-       $data['attachment_type'] = $attachType;
-       $data['size'] = $size;
-       return AppMedia::create($data);
-
+        if(!empty($attachment = $data["attachment"] ?? null)){
+            $attachment = $this->saveAttachment($attachment);
+            $size = bytesToHuman(File::size($attachment['attachment']));
+            $attachType = getFileType($attachment['type']);
+            $data['attachment'] = $attachment['filename'];
+            $data['attachment_type'] = $attachType;
+            $data['size'] = $size;
+        }
+        
+       return AppMedia::updateOrCreate(
+           ["id" => $data["id"]] ,
+           $data
+        );
     }
 
+   
     public function saveAttachment($attachment = null){
         $type = $attachment->getClientOriginalExtension();
         $filename = putFileInPrivateStorage($attachment , $this->mediaAttachmentsFilePath);
@@ -45,7 +49,7 @@ class Media
 
 
     public function saveCoverImage($cover_image = null){
-        return resizeImageandSave($cover_image , $this->mediaCoverImagePath);
+        return resizeImageandSave($cover_image , $this->mediaCoverImagePath , 'local' , 1080 , 780 );
     }
 
 

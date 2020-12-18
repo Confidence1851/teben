@@ -35,6 +35,10 @@ class MediaController extends Controller
     {
         $builder = Media::where('status', 'Visible')->where("attachment_type", $type == "books" ? "Document" : "Video")->orderby('created_at', 'desc');
 
+        if (!empty($key = $request['author'])) {
+            $builder = $builder->where('author_id', $key);
+        }
+
         if (!empty($key = $request['keyword'])) {
             $builder = $builder->where('title', 'like', "%$key%")->orWhereHas('subject', function ($query) use ($key) {
                 $query->where('name', 'like', "%$key%");
@@ -48,7 +52,7 @@ class MediaController extends Controller
         }
 
         $user = auth()->user();
-        $media = $builder->paginate(30);
+        $media = $builder->paginate(3);
         $title = ucfirst($type);
         $url = route("media_collection.index", $type);
         $classes = Klass::orderby("name")->get();
@@ -64,7 +68,8 @@ class MediaController extends Controller
 
     public function details(Request $request)
     {
-        return view('web.pages.media.info');
+        $mediaItem = Media::findorfail($request->id);
+        return view('web.pages.media.info' , compact("mediaItem"));
     }
 
 
@@ -87,6 +92,7 @@ class MediaController extends Controller
     {
         $data = $request->all();
         $data["price"] = AppConstants::DEFAULT_VIDEO_PRICE;
+        $data["author_id"] = auth()->id();
         $this->mediaTrait->store($data);
         return back()->with("success_msg" , "Media saved successfully!");
     }

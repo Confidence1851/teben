@@ -32,7 +32,7 @@ Route::namespace("User")->prefix('media-collection')->as('media_collection.')->g
     Route::get('/factory/{id?}', 'MediaController@factory')->name('factory');
     Route::post('/factory/store', 'MediaController@factoryStore')->name('factory.store');
     Route::get('/details/{id}/{slug?}', 'MediaController@details')->name('details');
-    Route::get('/{type}/{id?}/{author?}', 'MediaController@index')->name('index');
+    Route::get('/{type}', 'MediaController@index')->name('index');
     Route::get('/download', 'MediaController@download')->name('download');
 });
 

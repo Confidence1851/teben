@@ -38,5 +38,9 @@ class Media extends Model
         return route("media_collection.factory" , ["id" => $this->id]);
     }
 
+    public function isVIdeo(){
+        return $this->attachment_type == "Video";
+    }
+
 
 }

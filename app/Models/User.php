@@ -90,4 +90,8 @@ class User extends Authenticatable //implements MustVerifyEmail
     public function getUUID(){
         return $this->uuid.'.png';
     }
+
+    public function getMyVideosLink($id = null){
+        return route("media_collection.index" , ["author" => $this->id , "type" => "video" , "id" => $id]);
+    }
 }

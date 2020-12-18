@@ -110,6 +110,12 @@ body{
   overflow-x: hidden; /* Hide horizontal scrollbar */
   overflow-y: scroll; /* Add vertical scrollbar */
 }
+.mediaItem_bg_image{
+  width: 100%;
+  height: 70vh;
+  background-repeat: none;
+  background-size: cover;
+}
   </style>
   @yield('style')
   </head>
