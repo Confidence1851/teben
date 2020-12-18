@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Media;
-use App\Subject;
-use App\Notification;
-use App\Transaction;
+use App\Models\User;
+use App\Models\Media;
+use App\Models\Subject;
+use App\Models\Notification;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use File;

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Account;
 
 use App\Helpers\VideoStream;
-use App\Media;
-use App\SchoolAccount;
+use App\Models\Media;
+use App\Models\SchoolAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 

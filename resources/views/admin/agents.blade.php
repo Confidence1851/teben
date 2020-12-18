@@ -27,8 +27,8 @@
                         </thead>
                         <tbody>
                         @foreach($agents as $agent)
-                        @php($bought = App\Coupon::where('agent_id',$agent->id)->count())
-                        @php($sold = App\Coupon::where('agent_id',$agent->id)->where('user_id','')->count())
+                        @php($bought = App\Models\Coupon::where('agent_id',$agent->id)->count())
+                        @php($sold = App\Models\Coupon::where('agent_id',$agent->id)->where('user_id','')->count())
                           <tr>
                             <td class="align-middle">
                                 @if(!empty($agent->user->avatar))

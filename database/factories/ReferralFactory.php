@@ -3,8 +3,8 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Model;
-use App\Referral;
-use App\User;
+use App\Models\Referral;
+use App\Models\User;
 use Faker\Generator as Faker;
 
 $factory->define(Referral::class, function (Faker $faker) {

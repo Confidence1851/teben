@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Klass;
-use App\School;
-use App\SchoolAccount;
+use App\Models\Klass;
+use App\Models\School;
+use App\Models\SchoolAccount;
 use Illuminate\Http\Request;
 
 class SchoolController extends Controller

@@ -1,9 +1,9 @@
 <?php
 
 use App\Helpers\AppConstants;
-use App\Referral;
+use App\Models\Referral;
 use App\RefWallet;
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;

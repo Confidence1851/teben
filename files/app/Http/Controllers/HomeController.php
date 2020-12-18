@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Bank;
-use App\Comment;
-use App\Notification;
-use App\Teacher;
-use App\Transaction;
-use App\User;
-use App\Subject;
-use App\PayReceipt;
+use App\Models\Bank;
+use App\Models\Comment;
+use App\Models\Notification;
+use App\Models\Teacher;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Models\Subject;
+use App\Models\PayReceipt;
 use Carbon\Carbon;
-use App\Invest;
-use App\Coupon;
-use App\Media;
+use App\Models\Invest;
+use App\Models\Coupon;
+use App\Models\Media;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
-use App\Notifications\SendNotification;
+use App\Models\Notifications\SendNotification;
 use Illuminate\Support\Facades\Storage;
 use File;
 use Response;

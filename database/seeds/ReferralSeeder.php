@@ -11,6 +11,6 @@ class ReferralSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Referral::class, 20)->create();
+        factory(App\Models\Referral::class, 20)->create();
     }
 }

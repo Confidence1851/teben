@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Klass;
-use App\Media;
+use App\Models\Klass;
+use App\Models\Media;
 use Illuminate\Http\Request;
 
 class MyVideoController extends Controller

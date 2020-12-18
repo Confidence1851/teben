@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 @php($user = Auth::User())
 @php($states = \App\Http\Controllers\Controller::states())
-@php($mynots = App\Notification::where('user_id',$user->id))
+@php($mynots = App\Models\Notification::where('user_id',$user->id))
 @php($allnots = $mynots->orderby('created_at','desc')->get())
 @php($unreadnots = $mynots->where('read_status',0)->count())
 <head>

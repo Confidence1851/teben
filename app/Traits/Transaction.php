@@ -3,9 +3,9 @@
 namespace App\Traits;
 
 use App\Helpers\AppConstants;
-use App\SchoolAccount;
-use App\Transaction as AppTransaction;
-use App\User;
+use App\Models\SchoolAccount;
+use App\Models\Transaction as AppTransaction;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 

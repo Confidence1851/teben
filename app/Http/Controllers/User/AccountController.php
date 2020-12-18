@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Bank;
+use App\Models\Bank;
 use App\Helpers\AppConstants;
 use App\Http\Controllers\Controller;
-use App\PayReceipt;
+use App\Models\PayReceipt;
 use App\Traits\Coupon;
 use App\Traits\Wallet;
 use Exception;

@@ -17,7 +17,7 @@
 
 					<div class="col-md-4">
 					    <div class="text pt-3 text-center">
-					        @php($major = App\Subject::where('id',$teacher->teacher->major)->first())
+					        @php($major = App\Models\Subject::where('id',$teacher->teacher->major)->first())
 								<h3>{{ $teacher->name }}</h3>
 								<p class=" mb-2">Gender: {{ $teacher->gender }}</p>
 								<p class=" mb-2">Major Subject: {{ $major->name }}</p>

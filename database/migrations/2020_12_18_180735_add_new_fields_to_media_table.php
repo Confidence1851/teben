@@ -14,7 +14,11 @@ class AddNewFieldsToMediaTable extends Migration
     public function up()
     {
         Schema::table('media', function (Blueprint $table) {
-            //
+            if(!Schema::hasColumn('media', 'author_id')) {
+                $table->unsignedBigInteger('author_id')->after("id")->index()->nullable();
+                $table->foreign("author_id")->references("id")->on("users")->nullOnDelete();
+            }
+            if(!Schema::hasColumn('media', 'description')) $table->longText('description')->after("title");
         });
     }
 

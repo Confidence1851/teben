@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Notification;
-use App\Teacher;
-use App\Transaction;
-use App\PayReceipt;
-use App\User;
+use App\Models\Notification;
+use App\Models\Teacher;
+use App\Models\Transaction;
+use App\Models\PayReceipt;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;

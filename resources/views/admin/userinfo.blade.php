@@ -93,9 +93,9 @@
                       <div class="row">
                         <div class="col-md-4">
                             <h5 class="text-center">Teacher Information</h5>
-                            @php($major = App\Subject::where('id',$user->teacher->major)->first())
-                            @php($sub1 = App\Subject::where('id',$user->teacher->sub1)->first())
-                            @php($sub2 = App\Subject::where('id',$user->teacher->sub2)->first())
+                            @php($major = App\Models\Subject::where('id',$user->teacher->major)->first())
+                            @php($sub1 = App\Models\Subject::where('id',$user->teacher->sub1)->first())
+                            @php($sub2 = App\Models\Subject::where('id',$user->teacher->sub2)->first())
                             <p><b>Qualification :</b> <span class="moreinfo"> {{$user->teacher->qualification}}</span></p>
                             <p><b>Speciality :</b> <span class="moreinfo"> {{$user->teacher->specialty}}</span></p>
                             <p><b>Major Subject :</b> <span class="moreinfo"> {{ $major->name }}</span></p>
@@ -189,11 +189,11 @@
                     <h5 class="text-center">Lesson Requests</h5>
 
                       @foreach($Myrequests as $request)
-                        @php($teacher = App\User::find($request->receiver_id))
-                        @php($comments = App\Comment::where('transaction_id',$request->id)->where('type','comment')->get())
-                        @php($Countcomments = App\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
-                        @php($reports = App\Comment::where('transaction_id',$request->id)->where('type','reports')->get())
-                        @php($Countreports = App\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
+                        @php($teacher = App\Models\User::find($request->receiver_id))
+                        @php($comments = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->get())
+                        @php($Countcomments = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
+                        @php($reports = App\Models\Comment::where('transaction_id',$request->id)->where('type','reports')->get())
+                        @php($Countreports = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
 
                         <div class="col-md-4 card">
                           <a href="" data-toggle="modal" data-target="#requestmodal-{{$request->id}}">
@@ -283,11 +283,11 @@
                   <h5 class="text-center">Requests</h5>
 
                     @foreach($requests as $request)
-                      @php($teacher = App\User::find($request->receiver_id))
-                      @php($comments = App\Comment::where('transaction_id',$request->id)->where('type','comment')->get())
-                      @php($Countcomments = App\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
-                      @php($reports = App\Comment::where('transaction_id',$request->id)->where('type','reports')->get())
-                      @php($Countreports = App\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
+                      @php($teacher = App\Models\User::find($request->receiver_id))
+                      @php($comments = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->get())
+                      @php($Countcomments = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
+                      @php($reports = App\Models\Comment::where('transaction_id',$request->id)->where('type','reports')->get())
+                      @php($Countreports = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
 
                       <div class="col-md-12 card">
                         <a href="" data-toggle="modal" data-target="#requestmodal-{{$request->id}}">

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Bank;
-use App\Coupon as AppCoupon;
-use App\User;
+use App\Models\Bank;
+use App\Models\Coupon as AppCoupon;
+use App\Models\User;
 use App\Helpers\AppConstants;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Referral;
+use App\Models\Referral;
 use App\RefWallet;
 use App\Traits\Coupon;
-use App\Transaction;
+use App\Models\Transaction;
 
 class HomeController extends Controller
 {

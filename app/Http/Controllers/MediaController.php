@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\VideoStream;
-use App\Klass;
+use App\Models\Klass;
 use Illuminate\Http\Request;
-use App\User;
-use App\Media;
-use App\Subject;
-use App\Notification;
-use App\Transaction;
+use App\Models\User;
+use App\Models\Media;
+use App\Models\Subject;
+use App\Models\Notification;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;

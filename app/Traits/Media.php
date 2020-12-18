@@ -3,8 +3,8 @@
 namespace App\Traits;
 
 use App\Helpers\AppConstants;
-use App\Media as AppMedia;
-use App\User;
+use App\Models\Media as AppMedia;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
 class Media
 {
     use Constants;
-    
+
     public function store(array $data)
     {
 

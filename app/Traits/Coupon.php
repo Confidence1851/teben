@@ -2,10 +2,10 @@
 
 namespace App\Traits;
 
-use App\Coupon as AppCoupon;
+use App\Models\Coupon as AppCoupon;
 use App\Helpers\AppConstants;
-use App\SchoolAccount;
-use App\User;
+use App\Models\SchoolAccount;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 

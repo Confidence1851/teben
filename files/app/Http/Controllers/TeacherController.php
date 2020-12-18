@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Teacher;
-use App\User;
-use App\Subject;
+use App\Models\Teacher;
+use App\Models\User;
+use App\Models\Subject;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;

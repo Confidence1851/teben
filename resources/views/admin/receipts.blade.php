@@ -38,7 +38,7 @@
                                 <td class="align-middle"><a href="#" class="btn btn-success" data-toggle="modal" data-target="#editmodal-{{$receipt->id}}" ><i class="fa fa-edit"></i>Edit</a></td>
 
                             @else
-                                @php($admin = App\User::find($receipt->admin_id))
+                                @php($admin = App\Models\User::find($receipt->admin_id))
                                 <td class="align-middle">{{$admin->name}}</td>
                                 <td class="align-middle"><a href="#" class="btn btn-success"> Approved</a></td>
                             @endif

@@ -13,8 +13,8 @@
                 <div class="row mt-4">
                     @foreach($requests as $tran)
                     @php($user = Auth::user())
-                    @php($teacher = App\User::find($tran->receiver_id))
-                    @php($subject = App\Subject::find($tran->subject))
+                    @php($teacher = App\Models\User::find($tran->receiver_id))
+                    @php($subject = App\Models\Subject::find($tran->subject))
                     <div class="col-md-4 mb-3" id="{{$tran->id}}">
                         <div class="card" style="padding:10px">
                         <div class="text-center mb-2">{{$tran->purpose}} for {{$subject->name}}</div>

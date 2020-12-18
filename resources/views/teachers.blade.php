@@ -21,7 +21,7 @@
 			<div class="container">
 				<div class="row">
 				     @foreach($teachers as $teacher)
-				     @php($major = App\Subject::where('id',$teacher->major)->first())
+				     @php($major = App\Models\Subject::where('id',$teacher->major)->first())
 					<div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="staff">
 							<div class="img-wrap d-flex align-items-stretch">

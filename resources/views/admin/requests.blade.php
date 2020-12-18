@@ -27,13 +27,13 @@
                         </thead>
                         <tbody>
                         @foreach($requests as $request)
-                            @php($teacher = App\User::find($request->receiver_id))
-                            @php($comments = App\Comment::where('transaction_id',$request->id)->where('type','comment')->get())
-                            @php($Countcomments = App\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
-                            @php($reports = App\Comment::where('transaction_id',$request->id)->where('type','reports')->get())
-                            @php($Countreports = App\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
+                            @php($teacher = App\Models\User::find($request->receiver_id))
+                            @php($comments = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->get())
+                            @php($Countcomments = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
+                            @php($reports = App\Models\Comment::where('transaction_id',$request->id)->where('type','reports')->get())
+                            @php($Countreports = App\Models\Comment::where('transaction_id',$request->id)->where('type','comment')->count())
                             
-                            @php($major = App\Subject::where('id',$request->subject)->first())
+                            @php($major = App\Models\Subject::where('id',$request->subject)->first())
                           <tr>
                              <td class="align-middle"><a href="#" data-toggle="modal" data-target="#requestmodal-{{$request->id}}" class="btn btn-primary">Details</a></td>
                             <td class="align-middle">#{{$request->uuid}}</td>

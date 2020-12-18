@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Coupon;
-use App\User;
+use App\Models\Coupon;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;

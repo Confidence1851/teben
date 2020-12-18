@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 
-use App\Notification;
-use App\Teacher;
-use App\Transaction;
-use App\User;
-use App\Subject;
-use App\PayReceipt;
+use App\Models\Notification;
+use App\Models\Teacher;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Models\Subject;
+use App\Models\PayReceipt;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
