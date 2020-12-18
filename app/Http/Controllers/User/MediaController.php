@@ -4,8 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Helpers\AppConstants;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MediaRequest;
 use App\Klass;
 use App\Media;
+use App\Subject;
+use App\Traits\Media as TraitsMedia;
 use App\Traits\Transaction;
 use App\Traits\Wallet;
 use Illuminate\Http\Request;
@@ -13,20 +16,24 @@ use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
+
+    public $mediaTrait;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(TraitsMedia $mediaTrait)
     {
+        $this->mediaTrait = $mediaTrait;
         // $this->middleware(['auth','verified']);
     }
 
 
     public function index(Request $request, $type = "")
     {
-        $builder = Media::where('status', 'Visible')->where("attachment_type", $type == "books" ? "Document" : "Video")->orderby('title', 'asc');
+        $builder = Media::where('status', 'Visible')->where("attachment_type", $type == "books" ? "Document" : "Video")->orderby('created_at', 'desc');
 
         if (!empty($key = $request['keyword'])) {
             $builder = $builder->where('title', 'like', "%$key%")->orWhereHas('subject', function ($query) use ($key) {
@@ -43,7 +50,7 @@ class MediaController extends Controller
         $user = auth()->user();
         $media = $builder->paginate(30);
         $title = ucfirst($type);
-        $url = route("user.media.index", $type);
+        $url = route("media_collection.index", $type);
         $classes = Klass::orderby("name")->get();
         $terms = getTerms();
         $requestData = [
@@ -58,6 +65,30 @@ class MediaController extends Controller
     public function details(Request $request)
     {
         return view('web.pages.media.info');
+    }
+
+
+    public function factory(Request $request , $id = null)
+    {
+        $subjects = Subject::orderby('name','asc')->get();
+        $levels = getLevels();
+        $klasses = Klass::get();
+        $terms = getTerms();
+        if(!empty($id)){
+            $mediaItem = Media::findorfail($id);
+        }
+        else{
+            $mediaItem = new Media($request->all());
+        }
+        return view('web.pages.media.factory' , compact('mediaItem','subjects' ,'levels' , 'klasses' , 'terms'));
+    }
+
+    public function factoryStore(MediaRequest $request)
+    {
+        $data = $request->all();
+        $data["price"] = AppConstants::DEFAULT_VIDEO_PRICE;
+        $this->mediaTrait->store($data);
+        return back()->with("success_msg" , "Media saved successfully!");
     }
 
 

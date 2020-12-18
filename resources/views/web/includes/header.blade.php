@@ -46,8 +46,8 @@
 									</a>
 									<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 										<a class="dropdown-item" href="{{ route("home") }}" >Dashboard</a>
-										<a class="dropdown-item" href="{{ route('user.media.index' , "books") }}" >Books</a>
-										<a class="dropdown-item" href="{{ route('user.media.index' , "videos") }}" >Videos</a>
+										<a class="dropdown-item" href="{{ route('media_collection.index' , "books") }}" >Books</a>
+										<a class="dropdown-item" href="{{ route('media_collection.index' , "videos") }}" >Videos</a>
 										<a class="dropdown-item" href="{{ route("user.referrals") }}" >Referrals</a>
 										<a class="dropdown-item" href="{{ route("home") }}" >My Profile</a>
 										<a class="dropdown-item" href="#" onclick=" return $('#logout_form').trigger('submit'); ">Log out</a>

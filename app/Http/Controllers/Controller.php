@@ -40,6 +40,7 @@ class Controller extends BaseController
         $dev = User::where('email','ugoloconfidence@gmail.com')->first();
         return $dev;
     }
+    
 
     public function checkRequest(){
         $now = new Carbon();

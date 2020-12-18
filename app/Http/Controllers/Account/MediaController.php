@@ -36,7 +36,7 @@ class MediaController extends BaseController
 
         $media = $builder->paginate(20);
         $title = ucfirst($type);
-        $url = route("user.media.index" , $type);
+        $url = route("media_collection.index" , $type);
         $terms = getTerms();
         $requestData = [
             "keyword" => $request['keyword'],

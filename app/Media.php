@@ -26,8 +26,17 @@ class Media extends Model
         return $this->belongsTo(Klass::class , 'klass_id');
     }
 
-
-    public function getLink(){
+    public function getDetailLink(){
         return route("media_collection.details" , ["id" => $this->id , "slug" => slugify($this->title)]);
     }
+
+    public function getCoverImageUrl(){
+        return getFileFromStorage($this->mediaCoverImagePath.'/'.$this->image , "storage");
+    }
+
+    public function getEditLink(){
+        return route("media_collection.factory" , ["id" => $this->id]);
+    }
+
+
 }

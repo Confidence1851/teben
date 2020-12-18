@@ -581,3 +581,11 @@ function slugify($string)
    return Str::slug($string);
 }
 
+function canModifyMedia($action , $media_id , $user = null){
+    $actions = ["edit" , "delete"];
+    $action = strtolower($action);
+    if(!in_array($action , $actions)) return false;
+
+    $user = $user ?? auth()->user();
+    return true;
+}

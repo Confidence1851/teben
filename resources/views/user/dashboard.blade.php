@@ -126,7 +126,7 @@
                         </div>
 
                         <div class="col-md-4 mb-4 select_role">
-                            <a href="{{ route('user.media.index' , "books") }}">
+                            <a href="{{ route('media_collection.index' , "books") }}">
                                 <div class="card p-4">
                                     <div class="text-center">
                                         <i class="fa fa-user fs-30"></i>
@@ -137,7 +137,7 @@
                         </div>
 
                         <div class="col-md-4 mb-4 select_role">
-                            <a href="{{ route('user.media.index' , "videos") }}">
+                            <a href="{{ route('media_collection.index' , "videos") }}">
                                 <div class="card p-4">
                                     <div class="text-center">
                                         <i class="fa fa-user fs-30"></i>

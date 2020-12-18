@@ -52,6 +52,9 @@ class AppConstants
     const INDIRECT_REFERRAL_BONUS = 10;
     const REFERRAL_ACTIVATION_FEE = 200;
 
+    const DEFAULT_VIDEO_PRICE = 0;
+
+
 
 
 

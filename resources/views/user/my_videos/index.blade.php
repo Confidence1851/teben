@@ -121,7 +121,7 @@
                                                     <button type="button" data-dismiss="modal" class="btn btn-sm btn-danger" >Cancel</button>
                                                 </div>
                                                 <div class="col-auto fr">
-                                                    <form action="{{ route('user.media.download') }}" method="post" class="downloading_media">@csrf
+                                                    <form action="{{ route('media_collection.download') }}" method="post" class="downloading_media">@csrf
                                                         <input type="hidden" name="media_id" value="{{$medium->id}}" required>
                                                         <button type="submit" class="btn btn-sm btn-success text-white" >Download</button>
                                                     </form>

@@ -66,27 +66,27 @@
       </div>
       <div class="row">
        
-        @foreach ($media as $medium)
+        @foreach ($media as $mediaItem)
         <div class="col-lg-4 col-md-6 item">
           <div class="card">
             <div class="card-header p-0 position-relative">
               <a href="#url" class="zoom d-block">
-                <img class="card-img-bottom d-block" src="{{ $web_source }}/images/g3.jpg" alt="Card image cap">
+                <img class="card-img-bottom d-block" src="{{ $mediaItem->getCoverImageUrl() }}" alt="Card image cap">
               </a>
               <div class="author">
                 <div class="author-image">
                   <img src="{{ $web_source }}/images/student3.jpg" class="img-fluid rounded-circle" title="Adam Ster" alt="author image">
                 </div>
                 <div class="course-title">
-                  <a href="#url">{{ optional($medium->subject)->name }}</a>
+                  <a href="#url">{{ optional($mediaItem->subject)->name }}</a>
                 </div>
               </div>
             </div>
             <div class="card-body course-details">
               <div class="price-review d-flex justify-content-between mb-1align-items-center">
                 <p>
-                  <a href="{{ $medium->getLink() }}">
-                    {{ $medium->title }}
+                  <a href="{{ $mediaItem->getDetailLink() }}">
+                    {{ $mediaItem->title }}
                   </a>
                 </p>
               </div>
@@ -95,27 +95,29 @@
             <div class="card-footer course-price-view">
               <ul class="blog-list">
                 <li>
-                  <a href="#url"><span class="fa fa-heart"></span> 98</a>
+                  <a href="#url" title="Likes"><span class="fa fa-heart"></span> 98</a>
                 </li>
                 <li>
-                  <a href="#url"><span class="fa fa-user"></span> 15</a>
-                </li>
-                <li>
-                  <a href="#url"  data-target="#download_media_{{ $medium->id }}" data-toggle="modal" style="cursor: pointer" title="Download {{ $medium->title }}">
+                  <a href="#url"  title="Downloads" data-target="#download_media_{{ $mediaItem->id }}" data-toggle="modal" style="cursor: pointer" title="Download {{ $mediaItem->title }}">
                     <span class="fa fa-download"></span> 15
                   </a>
                 </li>
                 <li>
-                  <a href="#url"><span class="fa fa-eye"></span> 15</a>
+                  <a href="#url"  title="Views"><span class="fa fa-eye"></span> 15</a>
                 </li>
-                <li class="">
-                  <a href="#url" class="reviews d-inline-block">(56 Reviews)</a>
+                <li>
+                  <a href="#url" title="Comments"><span class="fa fa-comment"></span> 15</a>
                 </li>
+                @if(canModifyMedia("edit" , $mediaItem->id))
+                <li>
+                  <a href="{{ $mediaItem->getEditLink() }}" title="Edit this item"> <span class="fa fa-edit"></span> Edit</a>
+                </li>
+                @endif
               </ul>
             </div>
           </div>
         </div>
-        @include("user.fragments.modals.download_media" , ["media" => $medium])
+        @include("user.fragments.modals.download_media" , ["media" => $mediaItem])
         @endforeach
 
        

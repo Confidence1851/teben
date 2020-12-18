@@ -33,7 +33,7 @@ class MyVideoController extends Controller
         $user = auth()->user();
         $media = $builder->paginate(20);
         $title = ucfirst($type);
-        $url = route("user.media.index", $type);
+        $url = route("media_collection.index", $type);
         $classes = Klass::orderby("name")->get();
         $terms = getTerms();
         $requestData = [

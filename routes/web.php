@@ -28,10 +28,12 @@ Route::get('/contact-us', 'WebController@contact_us')->name('contact_us');
 Route::get('/teacher-information/{uuid}', 'WebController@teacherinfo')->name('teacherinfo');
 Route::get('/lgas/{state}', 'WebController@lgas')->name('lgas');
 
-Route::prefix('essentials')->as('media_collection.')->group(function () {
-    Route::get('/factory/{id?}', 'User\MediaController@factory')->name('factory');
-    Route::get('/details/{id}/{slug?}', 'User\MediaController@details')->name('details');
-    Route::get('/{type}/{id?}/{author?}', 'User\MediaController@index')->name('index');
+Route::namespace("User")->prefix('media-collection')->as('media_collection.')->group(function () {
+    Route::get('/factory/{id?}', 'MediaController@factory')->name('factory');
+    Route::post('/factory/store', 'MediaController@factoryStore')->name('factory.store');
+    Route::get('/details/{id}/{slug?}', 'MediaController@details')->name('details');
+    Route::get('/{type}/{id?}/{author?}', 'MediaController@index')->name('index');
+    Route::get('/download', 'MediaController@download')->name('download');
 });
 
 // Route::get('/download', 'WebController@download');
@@ -74,21 +76,15 @@ Route::namespace('User')->middleware("auth")->group(function () {
             Route::get('/referral-tree/{id?}', 'HomeController@referrals')->name('referrals');
 
 
-            Route::prefix('media')->as('media.')->group(function () {
-                Route::get('/index/{type}', 'MediaController@index')->name('index');
-                Route::post('/download', 'MediaController@download')->name('download');
-            });
+            // Route::prefix('media')->as('media.')->group(function () {
+            //     Route::get('/index/{type}', 'MediaController@index')->name('index');
+            //     Route::post('/download', 'MediaController@download')->name('download');
+            // });
 
             Route::prefix('account')->as('account.')->group(function () {
                 Route::post('/withdraw', 'AccountController@withdraw')->name('withdraw');
                 Route::match(["get" , "post"], '/profile', 'AccountController@profile')->name('profile');
                 Route::match(["get" , "post"], '/profile/bank', 'AccountController@bank')->name('profile.bank');
-            });
-
-            Route::prefix('my-videos')->as('my_videos.')->group(function () {
-                Route::get('/index', 'MyVideoController@index')->name('index');
-                Route::post('download', 'MyVideoController@download')->name('download');
-                Route::get('/watch/{filename}', 'MyVideoController@watchVideoAttachment')->name('watch.video');
             });
         });
     });
