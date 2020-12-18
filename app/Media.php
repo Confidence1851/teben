@@ -25,4 +25,9 @@ class Media extends Model
     public function klass(){
         return $this->belongsTo(Klass::class , 'klass_id');
     }
+
+
+    public function getLink(){
+        return route("media_collection.details" , ["id" => $this->id , "slug" => slugify($this->title)]);
+    }
 }

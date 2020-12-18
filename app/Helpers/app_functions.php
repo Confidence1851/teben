@@ -574,3 +574,10 @@ function getUniqueCode($length ,bool $typeInt,Model $model , $column = "uuid"){
 function logError(Exception $e){
     logger($e->getMessage() , $e->getTrace());
 }
+
+
+function slugify($string)
+{
+   return Str::slug($string);
+}
+

@@ -50,11 +50,16 @@
                               </select>
                           </div>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-auto">
                           <div class="form-group">
                               <button type="submit" class="btn btn-primary btn-md">Filter</button>
                           </div>
                       </div>
+                      <div class="col-auto">
+                        <div class="form-group">
+                            <a href="{{ route("media_collection.factory") }}" class="btn btn-primary btn-md">New Video</a>
+                        </div>
+                    </div>
                   </div>
               </form>
           </div>
@@ -79,10 +84,13 @@
             </div>
             <div class="card-body course-details">
               <div class="price-review d-flex justify-content-between mb-1align-items-center">
-                <p>{{ $medium->title }}</p>
+                <p>
+                  <a href="{{ $medium->getLink() }}">
+                    {{ $medium->title }}
+                  </a>
+                </p>
               </div>
-              <a href="#url" class="course-desc">At vero eos et accusam et
-                justo uo dolores</a>
+              At vero eos et accusam et uo dolores
             </div>
             <div class="card-footer course-price-view">
               <ul class="blog-list">
@@ -93,7 +101,9 @@
                   <a href="#url"><span class="fa fa-user"></span> 15</a>
                 </li>
                 <li>
-                  <a href="#url"><span class="fa fa-download"></span> 15</a>
+                  <a href="#url"  data-target="#download_media_{{ $medium->id }}" data-toggle="modal" style="cursor: pointer" title="Download {{ $medium->title }}">
+                    <span class="fa fa-download"></span> 15
+                  </a>
                 </li>
                 <li>
                   <a href="#url"><span class="fa fa-eye"></span> 15</a>
@@ -105,6 +115,7 @@
             </div>
           </div>
         </div>
+        @include("user.fragments.modals.download_media" , ["media" => $medium])
         @endforeach
 
        

@@ -1,9 +1,9 @@
 <!-- header -->
-<header class="w3l-header">
-	<div class="hero-header-11">
-		<div class="hero-header-11-content">
-			<div class="container">
-				<nav class="navbar navbar-expand-lg navbar-light py-md-2 py-0 px-0">
+<header class="w3l-header" >
+	<div class="hero-header-11" >
+		<div class="hero-header-11-content" >
+			<div class="container" >
+				<nav class="navbar navbar-expand-lg navbar-light py-md-2 py-0 px-0 sticky-top" >
 					<a class="navbar-brand" href="{{ route('index') }}"><img src="{{ $logo_img }}" width="50" height="50" alt="" class="d-none" />Teben Tutors</a>
 					<!-- if logo is image enable this   
 				<a class="navbar-brand" href="#{{ route('index') }}">
@@ -27,7 +27,7 @@
 								<a class="nav-link" href="{{  route('services') }}">Services</a>
 							</li>
 							<li class="nav-item {{ $activePage == "media" ? 'active' : ''  }}">
-								<a class="nav-link" href="{{ route("media_collection") }}">Media</a>
+								<a class="nav-link" href="{{ route("media_collection.index" , ["type" => "videos"]) }}">Media</a>
 							</li>
 							
 							<li class="nav-item {{ $activePage == "contact_us" ? 'active' : ''  }}">

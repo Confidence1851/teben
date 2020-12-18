@@ -150,4 +150,5 @@
           $("#download_media_progress").modal('show');
       });
   </script>
+  @yield('script')
   

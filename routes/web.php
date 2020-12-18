@@ -23,11 +23,17 @@
 Route::get('/', 'WebController@index')->name('index');
 Route::get('/teachers', 'WebController@teachers')->name('teachers');
 Route::get('/about-us', 'WebController@about_us')->name('about_us');
-Route::get('/media-collection', 'WebController@media')->name('media_collection');
 Route::get('/services', 'WebController@services')->name('services');
 Route::get('/contact-us', 'WebController@contact_us')->name('contact_us');
 Route::get('/teacher-information/{uuid}', 'WebController@teacherinfo')->name('teacherinfo');
 Route::get('/lgas/{state}', 'WebController@lgas')->name('lgas');
+
+Route::prefix('essentials')->as('media_collection.')->group(function () {
+    Route::get('/factory/{id?}', 'User\MediaController@factory')->name('factory');
+    Route::get('/details/{id}/{slug?}', 'User\MediaController@details')->name('details');
+    Route::get('/{type}/{id?}/{author?}', 'User\MediaController@index')->name('index');
+});
+
 // Route::get('/download', 'WebController@download');
 
 Route::get('/my-notifications', 'HomeController@mynotifications');

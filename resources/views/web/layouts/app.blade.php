@@ -85,7 +85,33 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+body{
+    height:2000px;
+    width: 100%;
+    margin:0;
+    padding:0;
+}
+
+#floating_nav{
+    position: fixed;
+    /* left: 0; */
+}
+
+.comments-head{
+  background-color: white;
+  height: 40px;
+}
+
+#comments-list{
+  width: 100%;
+  min-height: 40%;
+  max-height: 70vh;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  overflow-y: scroll; /* Add vertical scrollbar */
+}
   </style>
+  @yield('style')
   </head>
   <body>
 

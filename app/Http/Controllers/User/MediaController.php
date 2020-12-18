@@ -51,7 +51,13 @@ class MediaController extends Controller
             "class" => $request['class'],
             "term" => $request['term'],
         ];
-        return view('web.pages.media', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms'));
+        return view('web.pages.media.index', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms'));
+    }
+
+
+    public function details(Request $request)
+    {
+        return view('web.pages.media.info');
     }
 
 
