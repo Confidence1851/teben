@@ -52,7 +52,7 @@ class MediaController extends Controller
         }
 
         $user = auth()->user();
-        $media = $builder->paginate(3);
+        $media = $builder->paginate(30);
         $title = ucfirst($type);
         $url = route("media_collection.index", $type);
         $classes = Klass::orderby("name")->get();
@@ -69,23 +69,22 @@ class MediaController extends Controller
     public function details(Request $request)
     {
         $mediaItem = Media::findorfail($request->id);
-        return view('web.pages.media.info' , compact("mediaItem"));
+        return view('web.pages.media.info', compact("mediaItem"));
     }
 
 
-    public function factory(Request $request , $id = null)
+    public function factory(Request $request, $id = null)
     {
-        $subjects = Subject::orderby('name','asc')->get();
+        $subjects = Subject::orderby('name', 'asc')->get();
         $levels = getLevels();
         $klasses = Klass::get();
         $terms = getTerms();
-        if(!empty($id)){
+        if (!empty($id)) {
             $mediaItem = Media::findorfail($id);
-        }
-        else{
+        } else {
             $mediaItem = new Media($request->all());
         }
-        return view('web.pages.media.factory' , compact('mediaItem','subjects' ,'levels' , 'klasses' , 'terms'));
+        return view('web.pages.media.factory', compact('mediaItem', 'subjects', 'levels', 'klasses', 'terms'));
     }
 
     public function factoryStore(MediaRequest $request)
@@ -94,7 +93,7 @@ class MediaController extends Controller
         $data["price"] = AppConstants::DEFAULT_VIDEO_PRICE;
         $data["author_id"] = auth()->id();
         $this->mediaTrait->store($data);
-        return back()->with("success_msg" , "Media saved successfully!");
+        return back()->with("success_msg", "Media saved successfully!");
     }
 
 
@@ -122,7 +121,7 @@ class MediaController extends Controller
                 $media->id
             );
 
-            if(!$charge["success"]){
+            if (!$charge["success"]) {
                 return back()->with('error_msg', $charge["msg"]);
             }
 

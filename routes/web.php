@@ -29,11 +29,15 @@ Route::get('/teacher-information/{uuid}', 'WebController@teacherinfo')->name('te
 Route::get('/lgas/{state}', 'WebController@lgas')->name('lgas');
 
 Route::namespace("User")->prefix('media-collection')->as('media_collection.')->group(function () {
-    Route::get('/factory/{id?}', 'MediaController@factory')->name('factory');
-    Route::post('/factory/store', 'MediaController@factoryStore')->name('factory.store');
-    Route::get('/details/{id}/{slug?}', 'MediaController@details')->name('details');
+    
     Route::get('/{type}', 'MediaController@index')->name('index');
-    Route::get('/download', 'MediaController@download')->name('download');
+    Route::get('/details/{id}/{slug?}', 'MediaController@details')->name('details');
+
+    Route::middleware('auth')->group(function () {
+        Route::get('/factory/{id?}', 'MediaController@factory')->name('factory');
+        Route::post('/factory/store', 'MediaController@factoryStore')->name('factory.store');
+        Route::get('/download', 'MediaController@download')->name('download');
+    });
 });
 
 // Route::get('/download', 'WebController@download');
@@ -83,8 +87,8 @@ Route::namespace('User')->middleware("auth")->group(function () {
 
             Route::prefix('account')->as('account.')->group(function () {
                 Route::post('/withdraw', 'AccountController@withdraw')->name('withdraw');
-                Route::match(["get" , "post"], '/profile', 'AccountController@profile')->name('profile');
-                Route::match(["get" , "post"], '/profile/bank', 'AccountController@bank')->name('profile.bank');
+                Route::match(["get", "post"], '/profile', 'AccountController@profile')->name('profile');
+                Route::match(["get", "post"], '/profile/bank', 'AccountController@bank')->name('profile.bank');
             });
         });
     });
@@ -103,52 +107,52 @@ Route::post('/coupon-recharge', 'HomeController@couponRecharge')->name('couponRe
 
 
 
-    Route::get('/become-an-agent', 'AgentController@applyagent')->name('applyagent');
-    Route::post('/send-agent-application', 'AgentController@submitAgentApplication')->name('submitAgentApplication');
+Route::get('/become-an-agent', 'AgentController@applyagent')->name('applyagent');
+Route::post('/send-agent-application', 'AgentController@submitAgentApplication')->name('submitAgentApplication');
 
-    Route::group(['middleware'=> ['agent']], function () {
-        Route::get('/agent-area', 'AgentController@agent_area')->name('agent_area');
-    });
+Route::group(['middleware' => ['agent']], function () {
+    Route::get('/agent-area', 'AgentController@agent_area')->name('agent_area');
+});
 
-    Route::group(['middleware'=> ['parent']], function () {
-        Route::get('/quick-tutors', 'HomeController@quicktutors')->name('quicktutors');
-        Route::get('/home-schooling', 'HomeController@homeschooling')->name('homeschooling');
-        Route::get('/get-tutors', 'HomeController@getTutors')->name('getTutors');
-        Route::post('/request-teacher', 'HomeController@requestTeacher')->name('requestTeacher');
-    });
-    Route::get('/lesson-requests', 'HomeController@lessonrequests')->name('lessonrequests');
+Route::group(['middleware' => ['parent']], function () {
+    Route::get('/quick-tutors', 'HomeController@quicktutors')->name('quicktutors');
+    Route::get('/home-schooling', 'HomeController@homeschooling')->name('homeschooling');
+    Route::get('/get-tutors', 'HomeController@getTutors')->name('getTutors');
+    Route::post('/request-teacher', 'HomeController@requestTeacher')->name('requestTeacher');
+});
+Route::get('/lesson-requests', 'HomeController@lessonrequests')->name('lessonrequests');
 
-    Route::get('/get-notifications', 'HomeController@getnotify')->name('getnotify');
-    // Route::get('/test', 'HomeController@test')->name('test');
+Route::get('/get-notifications', 'HomeController@getnotify')->name('getnotify');
+// Route::get('/test', 'HomeController@test')->name('test');
 
 
-    Route::post('/submit-teacher-application', 'TeacherController@submitTeacher')->name('submitTeacher');
-    Route::get('/become-a-teacher', 'TeacherController@applyteacher')->name('applyteacher');
-    Route::group(['middleware'=> ['teacher']], function () {
-        Route::get('/my-information', 'TeacherController@myinfo')->name('myinfo');
-    });
+Route::post('/submit-teacher-application', 'TeacherController@submitTeacher')->name('submitTeacher');
+Route::get('/become-a-teacher', 'TeacherController@applyteacher')->name('applyteacher');
+Route::group(['middleware' => ['teacher']], function () {
+    Route::get('/my-information', 'TeacherController@myinfo')->name('myinfo');
+});
 
-    Route::post('/update-profile', 'HomeController@updateProfile')->name('updateProfile');
+Route::post('/update-profile', 'HomeController@updateProfile')->name('updateProfile');
 
-    Route::get('/my-transactions', 'HomeController@transactions')->name('transactions');
+Route::get('/my-transactions', 'HomeController@transactions')->name('transactions');
 
-    Route::post('/make-deposit', 'HomeController@deposit')->name('deposit');
+Route::post('/make-deposit', 'HomeController@deposit')->name('deposit');
 
-    Route::post('/make-withdrawal', 'HomeController@withdraw')->name('withdraw');
+Route::post('/make-withdrawal', 'HomeController@withdraw')->name('withdraw');
 
-    Route::post('/verify-bank', 'HomeController@verifybank')->name('verifybank');
+Route::post('/verify-bank', 'HomeController@verifybank')->name('verifybank');
 
-    Route::post('/make-investment', 'HomeController@makeInvestment')->name('makeInvestment');
+Route::post('/make-investment', 'HomeController@makeInvestment')->name('makeInvestment');
 
-    Route::get('/available-books-and-videos', 'MediaController@available_books')->name('available_books');
+Route::get('/available-books-and-videos', 'MediaController@available_books')->name('available_books');
 
-    Route::get('/search-media', 'MediaController@search_media')->name('search_media');
+Route::get('/search-media', 'MediaController@search_media')->name('search_media');
 
-    Route::post('/download-books-and-videos', 'MediaController@userDownloadAttachment')->name('user_download_attachment');
+Route::post('/download-books-and-videos', 'MediaController@userDownloadAttachment')->name('user_download_attachment');
 
 // });
 
-    Route::post('/upload-receipt', 'HomeController@uploadreceipt')->name('uploadreceipt');
+Route::post('/upload-receipt', 'HomeController@uploadreceipt')->name('uploadreceipt');
 
 Route::post('/upload-avatar', 'HomeController@uploadAvatar')->name('uploadAvatar');
 Route::post('/complete-profile', 'HomeController@completeProfile')->name('completeProfile');
