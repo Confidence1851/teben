@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\MediaComment;
+use App\MediaLike;
 use App\Traits\Constants;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,41 +12,58 @@ class Media extends Model
     use Constants;
     protected $guarded = [];
 
-    public function getAttachment(){
-        return $this->mediaAttachmentsFilePath.'/'.$this->attachment;
+    public function getAttachment()
+    {
+        return $this->mediaAttachmentsFilePath . '/' . $this->attachment;
     }
 
-    public function getCoverImage(){
-        return $this->mediaCoverImagePath.'/'.$this->image;
+    public function getCoverImage()
+    {
+        return $this->mediaCoverImagePath . '/' . $this->image;
     }
 
-    public function subject(){
-        return $this->belongsTo(Subject::class , 'subject_id');
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id');
     }
 
-    public function klass(){
-        return $this->belongsTo(Klass::class , 'klass_id');
+    public function klass()
+    {
+        return $this->belongsTo(Klass::class, 'klass_id');
     }
 
-    public function getDetailLink(){
-        return route("media_collection.details" , ["id" => $this->id , "slug" => slugify($this->title)]);
+    public function getDetailLink()
+    {
+        return route("media_collection.details", ["id" => $this->id, "slug" => slugify($this->title)]);
     }
 
-    public function getCoverImageUrl(){
-        return getFileFromStorage($this->mediaCoverImagePath.'/'.$this->image , "storage");
+    public function getCoverImageUrl()
+    {
+        return getFileFromStorage($this->mediaCoverImagePath . '/' . $this->image, "storage");
     }
 
-    public function getEditLink(){
-        return route("media_collection.factory" , ["id" => $this->id]);
+    public function getEditLink()
+    {
+        return route("media_collection.factory", ["id" => $this->id]);
     }
 
-    public function isVIdeo(){
+    public function isVIdeo()
+    {
         return $this->attachment_type == "Video";
     }
 
-    public function author(){
-        return  $this->belongsTo(User::class , 'author_id');
-      }
+    public function author()
+    {
+        return  $this->belongsTo(User::class, 'author_id');
+    }
 
+    public function likes()
+    {
+        return  $this->hasMany(MediaLike::class, 'media_id');
+    }
 
+    public function comments()
+    {
+        return  $this->hasMany(MediaComment::class, 'media_id');
+    }
 }

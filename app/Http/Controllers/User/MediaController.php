@@ -69,6 +69,8 @@ class MediaController extends Controller
     public function details(Request $request)
     {
         $mediaItem = Media::findorfail($request->id);
+        $mediaItem->views_count += 1;
+        $mediaItem->save();
         return view('web.pages.media.info', compact("mediaItem"));
     }
 
@@ -103,11 +105,11 @@ class MediaController extends Controller
             'media_id' => 'required',
         ]);
 
-        $media = Media::findorfail($data['media_id']);
+        $mediaItem = Media::findorfail($data['media_id']);
 
-        $name = $media->title;
-        $filename = $media->getAttachment();
-        $amount = $media->price;
+        $name = $mediaItem->title;
+        $filename = $mediaItem->getAttachment();
+        $amount = $mediaItem->price;
 
         $user = auth()->user();
 
@@ -118,12 +120,15 @@ class MediaController extends Controller
                 $amount,
                 'You downloaded an item for the sum of NGN' . $amount,
                 AppConstants::MEDIA_DOWNLOAD,
-                $media->id
+                $mediaItem->id
             );
 
             if (!$charge["success"]) {
                 return back()->with('error_msg', $charge["msg"]);
             }
+
+            $mediaItem->downloads_count += 1;
+            $mediaItem->save();
 
             session()->flash('success_msg', 'Downloading in progress...');
             return downloadFileFromPrivateStorage($filename, $name);

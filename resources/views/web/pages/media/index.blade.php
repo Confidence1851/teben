@@ -109,22 +109,22 @@
                                 <div class="card-footer course-price-view">
                                     <ul class="blog-list">
                                         <li>
-                                            <a href="#url" title="Likes"><span class="fa fa-heart"></span> 98</a>
+                                            <a href="#url" title="Likes"><span class="fa fa-heart"></span> {{ $mediaItem->likes_count }}</a>
                                         </li>
                                         <li>
                                             <a href="#url" title="Downloads"
                                                 data-target="#download_media_{{ $mediaItem->id }}" data-toggle="modal"
                                                 style="cursor: pointer" title="Download {{ $mediaItem->title }}">
-                                                <span class="fa fa-download"></span> 15
+                                                <span class="fa fa-download"></span> {{ $mediaItem->downloads_count }}
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#url" title="Views"><span title="Views" class="fa fa-eye"></span> 15</a>
+                                            <a href="#url" title="Views"><span title="Views" class="fa fa-eye"></span> {{ $mediaItem->views_count }}</a>
                                         </li>
                                         <li>
-                                            <a href="#url" title="Comments"><span class="fa fa-comment"></span> 15</a>
+                                            <a href="#url" title="Comments"><span class="fa fa-comment"></span> {{ $mediaItem->comments_count }}</a>
                                         </li>
-                                        @if (canModifyMedia('edit', $mediaItem->author_id))
+                                        @if (canModifyMedia('edit', $mediaItem))
                                             <li>
                                                 <a href="{{ $mediaItem->getEditLink() }}" title="Edit this item"> <span
                                                         class="fa fa-edit"></span> Edit</a>

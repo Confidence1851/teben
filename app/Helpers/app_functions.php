@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\AppConstants;
+use App\Models\Media;
 use App\Models\Referral;
 use App\RefWallet;
 use App\Models\User;
@@ -586,11 +587,11 @@ function slugify($string)
    return Str::slug($string);
 }
 
-function canModifyMedia($action , $media_user_id , $user = null){
+function canModifyMedia($action = "edit" ,Media $media, $user = null){
     $actions = ["edit" , "delete"];
     $action = strtolower($action);
     if(!in_array($action , $actions)) return false;
 
     $user = $user ?? auth()->user();
-    return !empty($user) ? in_array($user->id , [$media_user_id]) : false;
+    return !empty($user) ? in_array($user->id , [$media->author_id]) : false;
 }
