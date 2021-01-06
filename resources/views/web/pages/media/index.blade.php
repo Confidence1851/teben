@@ -88,7 +88,7 @@
                                     </a>
                                     <div class="author">
                                         <div class="author-image">
-                                            <img src="{{ $media->user->getAvatar() }}"
+                                            <img src="{{ $mediaItem->user->getAvatar() }}"
                                                 class="img-fluid rounded-circle" title="Author" alt="author image">
                                         </div>
                                         <div class="course-title">
