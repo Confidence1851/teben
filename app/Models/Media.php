@@ -42,5 +42,9 @@ class Media extends Model
         return $this->attachment_type == "Video";
     }
 
+    public function user(){
+        return  $this->belongsTo(User::class , 'author_id');
+      }
+
 
 }

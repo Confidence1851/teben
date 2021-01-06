@@ -82,14 +82,14 @@
                         <div class="col-lg-4 col-md-6 item">
                             <div class="card">
                                 <div class="card-header p-0 position-relative">
-                                    <a href="#url" class="zoom d-block">
+                                    <a href="{{ $mediaItem->getDetailLink() }}" class="zoom d-block">
                                         <img class="card-img-bottom d-block" src="{{ $mediaItem->getCoverImageUrl() }}"
                                             title="{{ $mediaItem->title }}" alt="Media Image" />
                                     </a>
                                     <div class="author">
                                         <div class="author-image">
-                                            <img src="{{ $web_source }}/images/student3.jpg"
-                                                class="img-fluid rounded-circle" title="Adam Ster" alt="author image">
+                                            <img src="{{ $media->user->getAvatar() }}"
+                                                class="img-fluid rounded-circle" title="Author" alt="author image">
                                         </div>
                                         <div class="course-title">
                                             <a href="#url">{{ optional($mediaItem->subject)->name }}</a>
@@ -119,12 +119,12 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#url" title="Views"><span class="fa fa-eye"></span> 15</a>
+                                            <a href="#url" title="Views"><span title="Views" class="fa fa-eye"></span> 15</a>
                                         </li>
                                         <li>
                                             <a href="#url" title="Comments"><span class="fa fa-comment"></span> 15</a>
                                         </li>
-                                        @if (canModifyMedia('edit', $mediaItem->id))
+                                        @if (canModifyMedia('edit', $mediaItem->user_id))
                                             <li>
                                                 <a href="{{ $mediaItem->getEditLink() }}" title="Edit this item"> <span
                                                         class="fa fa-edit"></span> Edit</a>
