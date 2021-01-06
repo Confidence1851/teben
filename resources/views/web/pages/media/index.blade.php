@@ -79,7 +79,6 @@
                 <div class="row">
 
                     @foreach ($media as $mediaItem)
-                    @dd($mediaItem->author)
                         <div class="col-lg-4 col-md-6 item">
                             <div class="card">
                                 <div class="card-header p-0 position-relative">
