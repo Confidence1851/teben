@@ -79,6 +79,7 @@
                 <div class="row">
 
                     @foreach ($media as $mediaItem)
+                    @dd($mediaItem->author)
                         <div class="col-lg-4 col-md-6 item">
                             <div class="card">
                                 <div class="card-header p-0 position-relative">
@@ -88,7 +89,7 @@
                                     </a>
                                     <div class="author">
                                         <div class="author-image">
-                                            <img src="{{ $mediaItem->user->getAvatar() }}"
+                                            <img src="{{ $mediaItem->author->getAvatar() }}"
                                                 class="img-fluid rounded-circle" title="Author" alt="author image">
                                         </div>
                                         <div class="course-title">
@@ -124,7 +125,7 @@
                                         <li>
                                             <a href="#url" title="Comments"><span class="fa fa-comment"></span> 15</a>
                                         </li>
-                                        @if (canModifyMedia('edit', $mediaItem->user_id))
+                                        @if (canModifyMedia('edit', $mediaItem->author_id))
                                             <li>
                                                 <a href="{{ $mediaItem->getEditLink() }}" title="Edit this item"> <span
                                                         class="fa fa-edit"></span> Edit</a>

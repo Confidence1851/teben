@@ -33,6 +33,7 @@ class MediaController extends Controller
 
     public function index(Request $request, $type = "")
     {
+        Media::where('author_id' , null)->update(["author_id" => adminAccount()->id]);
         $builder = Media::where('status', 'Visible')->where("attachment_type", $type == "books" ? "Document" : "Video")->orderby('created_at', 'desc');
 
         if (!empty($key = $request['author'])) {

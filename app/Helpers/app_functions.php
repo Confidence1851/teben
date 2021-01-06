@@ -15,6 +15,11 @@ function developerAccount()
     return User::where("email", "ugoloconfidence@gmail.com")->first();
 }
 
+function adminAccount()
+{
+    return User::where("email", "admin@tebentutors.com")->first();
+}
+
 function getTerms($term = null)
 {
     $terms = [
