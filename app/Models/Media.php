@@ -10,9 +10,13 @@ class Media extends Model
     use Constants;
     protected $guarded = [];
 
-    public function getAttachment()
+    public function getAttachment($getPath = true)
     {
-        return $this->mediaAttachmentsFilePath . '/' . $this->attachment;
+        $path = $this->mediaAttachmentsFilePath . '/' . $this->attachment;
+        if ($getPath) {
+            return $path;
+        }
+        return readFileUrl("encrypt" , $path);
     }
 
     public function getCoverImage()

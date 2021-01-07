@@ -20,7 +20,7 @@
             <div class="row mt-3">
                 <div class="col-md-9">
                     @if ($mediaItem->isVIdeo())
-                        <video src="{{ route('watch_video_attachment', encrypt($mediaItem->getAttachment())) }}" controls
+                        <video src="{{ $mediaItem->getAttachment(false) }}" controls
                             class="img-fluid" id="video_player"></video>
                     @else
                         <div class="img-fluid mediaItem_bg_image"
