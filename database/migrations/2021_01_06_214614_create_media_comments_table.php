@@ -15,13 +15,15 @@ class CreateMediaCommentsTable extends Migration
     {
         Schema::create('media_comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedBigInteger('media_id')->index();
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->string("name");
             $table->text("comment");
             $table->tinyInteger("status")->default(0);  // 0 for not active , 1 for active 
-            $table->foreign("user_id")->references("id")->on("users")->cascadeOnDelete();
+            $table->foreign("user_id")->references("id")->on("users")->nullOnDelete();
             $table->foreign("media_id")->references("id")->on("media")->cascadeOnDelete();
+            $table->foreign("parent_id")->references("id")->on("media_comments")->cascadeOnDelete();
             $table->timestamps();
         });
     }

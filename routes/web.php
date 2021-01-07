@@ -36,7 +36,9 @@ Route::namespace("User")->prefix('media-collection')->as('media_collection.')->g
     Route::middleware('auth')->group(function () {
         Route::get('/factory/{id?}', 'MediaController@factory')->name('factory');
         Route::post('/factory/store', 'MediaController@factoryStore')->name('factory.store');
-        Route::get('/download', 'MediaController@download')->name('download');
+        Route::post('/download', 'MediaController@download')->name('download');
+        Route::post('/comment', 'MediaController@comment')->name('comment');
+        Route::post('/like', 'MediaController@like')->name('like');
     });
 });
 

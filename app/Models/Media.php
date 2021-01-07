@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\MediaComment;
-use App\MediaLike;
 use App\Traits\Constants;
 use Illuminate\Database\Eloquent\Model;
 

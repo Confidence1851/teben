@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Helpers\AppConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MediaRequest;
+use App\Models\MediaComment;
 use App\Models\Klass;
 use App\Models\Media;
 use App\Models\Subject;
@@ -13,6 +14,7 @@ use App\Traits\Transaction;
 use App\Traits\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class MediaController extends Controller
 {
@@ -95,7 +97,7 @@ class MediaController extends Controller
         $data["price"] = AppConstants::DEFAULT_VIDEO_PRICE;
         $data["author_id"] = auth()->id();
         $this->mediaTrait->store($data);
-        return back()->with("success_msg", "Media saved successfully!");
+        return back()->with("success_msg", "Media saved successfully! Admin may have to approve it first.");
     }
 
 
@@ -137,6 +139,30 @@ class MediaController extends Controller
         session()->flash('error_msg', 'Media file seems to be missing!');
         return back();
     }
+
+
+    public function comment(Request $request)
+    {
+        $data = $request->validate([
+            "parent_id" => "nullable|exists:media_comments,id",
+            "media_id" => "required|exists:media,id",
+            "comment" => "required|string",
+            "name" => "string|".Rule::requiredIf(!auth()->check()) ,
+        ]);
+
+        if(!empty($user = auth()->user()))
+        {
+            $data["user_id"] = $user->id;       
+            $data["name"] = $user->name;        
+        }
+        
+
+        $comment = MediaComment::create($data);
+        $media = $comment->media;
+        $media->update(["comments_count" => $media->comments_count + 1]);
+        return back()->with("success_msg", "Comment saved successfully!");
+    }
+
 }
 
 // end

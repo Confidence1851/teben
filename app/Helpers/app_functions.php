@@ -595,3 +595,13 @@ function canModifyMedia($action = "edit" ,Media $media, $user = null){
     $user = $user ?? auth()->user();
     return !empty($user) ? in_array($user->id , [$media->author_id]) : false;
 }
+
+
+
+function readFileUrl($mode,$path){
+    if(strtolower($mode) == "encrypt"){
+        $path = base64_encode($path);
+        return route("read_file" , $path);
+    }
+    return base64_decode($path);
+}

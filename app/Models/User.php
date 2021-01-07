@@ -78,7 +78,7 @@ class User extends Authenticatable //implements MustVerifyEmail
 
     public function getAvatar(){
         if(!empty($this->avatar)){
-           return route('read_file' , encrypt($this->avatarPath()));
+           return readFileUrl("encrypt" ,$this->avatarPath());
         }
         return my_asset('user.png');
     }
