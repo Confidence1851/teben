@@ -31,10 +31,10 @@
                 <div class="col-md-3">
                     <div class="d-flex justify-content-start">
                         <div class="">
-                            <img src="{{ $mediaItem->author->getAvatar() }}" class="img-fluid rounded-circle" width="70" height="70" title="Author"
+                            <img src="{{ $mediaItem->author->getAvatar() }}" class="img-fluid rounded-circle" width="60" title="Author"
                                 alt="author image">
                         </div>
-                        <div class="">
+                        <div class="pt-2 ml-3">
                             <div class=""><b>Author</b></div>
                             <a href="#url">{{ $mediaItem->author->name }}</a>
                         </div>
