@@ -31,7 +31,7 @@
                 <div class="col-md-3">
                     <div class="d-flex justify-content-start">
                         <div class="">
-                            <img src="{{ $mediaItem->author->getAvatar() }}" class="img-fluid rounded-circle" title="Author"
+                            <img src="{{ $mediaItem->author->getAvatar() }}" class="img-fluid rounded-circle" width="70" height="70" title="Author"
                                 alt="author image">
                         </div>
                         <div class="">

@@ -134,7 +134,7 @@ function my_asset($path = null)
 function getFileFromStorage($fullpath, $storage = 'public')
 {
     if ($storage == 'storage') {
-        return route('read_file', encrypt($fullpath));
+        return readFileUrl("encrypt" , $fullpath);
     }
     return my_asset($fullpath);
 }
