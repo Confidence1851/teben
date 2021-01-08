@@ -3,8 +3,9 @@
 use App\Helpers\AppConstants;
 use App\Models\Media;
 use App\Models\Referral;
-use App\RefWallet;
+use App\Models\RefWallet;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
@@ -596,6 +597,10 @@ function canModifyMedia($action = "edit" ,Media $media, $user = null){
     return !empty($user) ? in_array($user->id , [$media->author_id]) : false;
 }
 
+
+function carbon(){
+    return new Carbon();
+}
 
 
 function readFileUrl($mode,$path){

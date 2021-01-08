@@ -104,7 +104,7 @@
                                             </a>
                                         </p>
                                     </div>
-                                    At vero eos et accusam et uo dolores
+                                    {!! $mediaItem->description !!}
                                 </div>
                                 <div class="card-footer course-price-view">
                                     <ul class="blog-list">

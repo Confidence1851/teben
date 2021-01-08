@@ -194,9 +194,9 @@ Route::prefix('admin')->middleware("admin")->group(function () {
     Route::get('/agent-coupons/{id}', 'AgentController@agent_coupons')->name('agent_coupons');
     Route::get('/agents-applications', 'AgentController@agentsapply')->name('agentsapply');
 
-    Route::resource('/media', 'MediaController');
-    Route::get('/watch-video/{filename}', 'MediaController@watchVideoAttachment')->name('watch_video_attachment');
-    Route::post('/download-attachment', 'MediaController@downloadAttachment')->name('download_attachment');
+    Route::resource('/media', 'Admin\MediaController');
+    Route::get('/watch-video/{filename}', 'Admin\MediaController@watchVideoAttachment')->name('watch_video_attachment');
+    Route::post('/download-attachment', 'Admin\MediaController@downloadAttachment')->name('download_attachment');
 
     Route::post('/agent-status/{id}', 'AgentController@agentstatus')->name('agentstatus');
 

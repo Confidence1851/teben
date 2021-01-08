@@ -45,6 +45,9 @@
             font-size:20px;
             margin-left:10px;
         }
+        select{
+            height: 46px !important;
+        }
     </style>
 </head>
 
