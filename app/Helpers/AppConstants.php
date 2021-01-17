@@ -55,7 +55,9 @@ class AppConstants
     const DEFAULT_VIDEO_PRICE = 0;
 
 
-
+    const PENDING_STATUS = 0;
+    const ACTIVE_STATUS = 1;
+    const INACTIVE_STATUS = 2;
 
 
     public static function ignoreApiKeysLog()

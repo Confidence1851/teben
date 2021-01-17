@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\AppConstants;
 use App\Traits\Constants;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +10,17 @@ class Media extends Model
 {
     use Constants;
     protected $guarded = [];
+
+    public function getStatus(){
+        return $this->status == AppConstants::ACTIVE_STATUS ? "Active" : "Inactive";
+    }
+
+    public function getPrice(){
+        if ($price = $this->price > 0){
+            return "NGN $price";
+        }
+        return "Free";
+    }
 
     public function getAttachment($getPath = true)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\AppConstants;
 use Illuminate\Foundation\Console\ModelMakeCommand;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -44,9 +45,9 @@ class AppServiceProvider extends ServiceProvider
                 // 'instructorRole' => $this->instructorRole,
                 // 'subAdminRole' => $this->subAdminRole,
                 // 'adminRole' => $this->adminRole,
-                // 'activeStatus' => $this->activeStatus,
-                // 'pendingStatus' => $this->pendingStatus,
-                // 'inactiveStatus' => $this->inactiveStatus,
+                'activeStatus' => AppConstants::ACTIVE_STATUS,
+                'pendingStatus' => AppConstants::PENDING_STATUS,
+                'inactiveStatus' => AppConstants::INACTIVE_STATUS,
             ]);
         });
     }

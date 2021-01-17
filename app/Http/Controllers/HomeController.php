@@ -737,7 +737,7 @@ class HomeController extends Controller
     public function available_books()
     {
         $user = Auth::user();
-        $mediaList = Media::where('status','Visible')->orderby('title','asc')->get();
+        $mediaList = Media::where('status', AppConstants::ACTIVE_STATUS)->orderby('title','asc')->get();
         $medias = [];
         foreach($mediaList as $media){
            $medias.= $this->mediaTemplate($media);

@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="m-5">
                     <div class="text-center">
-                        Downloading this "{{ $mediaItem->title }}"" may cost you some money! 
+                        Downloading this "{{ $mediaItem->title }}" may cost you some data! 
                     </div>
                 
                 </div>

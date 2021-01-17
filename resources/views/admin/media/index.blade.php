@@ -143,13 +143,9 @@
                                             <td class="align-middle">{{ $mediaItem->attachment_type }}</td>
                                             <td class="align-middle">{{ $mediaItem->size }}</td>
                                             <td class="align-middle">
-                                                @if ($price = $mediaItem->price > 0)
-                                                    NGN {{ $price }}
-                                                @else
-                                                    Free
-                                                @endif
+                                                {{ $mediaItem->getPrice() }}
                                             </td>
-                                            <td class="align-middle">{{ $mediaItem->status }}</td>
+                                            <td class="align-middle {{ $mediaItem->status == 1 ? "text-success" : "text-danger" }}">{{ $mediaItem->getStatus() }}</td>
 
                                             <td>
                                                 <a href="{{ route('media.show', $mediaItem->id) }}"
@@ -331,8 +327,10 @@
                                             <select class="form-control" name="status" style="height:45px"
                                                 aria-required="true">
                                                 <option disabled selected>Select One</option>
-                                                <option value="Visible">Visible</option>
-                                                <option value="Hidden">Hidden</option>
+                                                @foreach ($statuses as $key => $value)
+                                                <option value="{{ $key }}">
+                                                    {{ $value }} </option>
+                                            @endforeach
                                             </select>
                                         </div>
 

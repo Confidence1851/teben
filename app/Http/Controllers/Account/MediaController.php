@@ -15,7 +15,7 @@ class MediaController extends BaseController
     public function index(Request $request , $type = "")
     {
         $account = $this->getAccount();
-        $builder = Media::where('status','Visible')
+        $builder = Media::where('status', AppConstants::ACTIVE_STATUS)
                         ->where("attachment_type" , $type == "books" ? "Document" : "Video")
                         ->where('klass_id' , $account->klass_id)
                         ->where('term' , $account->term)

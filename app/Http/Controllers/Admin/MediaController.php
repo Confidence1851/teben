@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\AppConstants;
 use App\Helpers\VideoStream;
 use App\Http\Controllers\Controller;
 use App\Models\Klass;
@@ -30,7 +31,9 @@ class MediaController extends Controller
 
     public function index(Request $request)
     {
-        $builder = Media::orderby('title','asc');
+        Media::where('status','Visible')->update(["status" => AppConstants::ACTIVE_STATUS]);
+        Media::where('status','Hidden')->update(["status" => AppConstants::INACTIVE_STATUS]);
+        $builder = Media::orderby('id','desc');
         
         if (!empty($key = $request["search_keywords"])) {
             $words = explode(' ', $key);
@@ -83,7 +86,12 @@ class MediaController extends Controller
         $klasses = Klass::get();
         $terms = getTerms();
         $query = $request->all();
-        return view('admin.media.index',compact('media','subjects' ,'levels' , 'klasses' , 'terms' , 'query'));
+        $media->append($request->query());
+        $statuses = [
+            AppConstants::ACTIVE_STATUS => "Active",
+            AppConstants::INACTIVE_STATUS => "Inactive",
+        ];
+        return view('admin.media.index',compact('media','subjects' ,'levels' , 'klasses' , 'terms' , 'query' , 'statuses'));
     }
 
     /**
@@ -175,12 +183,16 @@ class MediaController extends Controller
      */
     public function show($id)
     {
-        $media = Media::findorfail($id);
+        $mediaItem = Media::findorfail($id);
         $subjects = Subject::orderby('name','asc')->get();
         $levels = getLevels();
         $klasses = Klass::get();
         $terms = getTerms();
-        return view('admin.media.show',compact('media' ,'subjects' , 'levels' , 'klasses' , 'terms' ));
+        $statuses = [
+            AppConstants::ACTIVE_STATUS => "Active",
+            AppConstants::INACTIVE_STATUS => "Inactive",
+        ];
+        return view('admin.media.show',compact('mediaItem' ,'subjects' , 'levels' , 'klasses' , 'terms', 'statuses' ));
     }
 
 
@@ -275,7 +287,7 @@ class MediaController extends Controller
 
     public function available_books()
     {
-        $medias = Media::where('status','Visible')->orderby('title','asc')->paginate(10);
+        $medias = Media::where('status', AppConstants::ACTIVE_STATUS)->orderby('title','asc')->paginate(10);
         $subjects = Subject::orderby('name','asc')->get();
         $levels = getLevels();
         // $medias ;

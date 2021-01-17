@@ -226,7 +226,7 @@ class MediaController extends Controller
 
     public function available_books()
     {
-        $medias = Media::where('status','Visible')->orderby('title','asc')->paginate(10);
+        $medias = Media::where('status', AppConstants::ACTIVE_STATUS)->orderby('title','asc')->paginate(10);
         $subjects = Subject::orderby('name','asc')->get();
         $levels = getLevels();
         // $medias ;

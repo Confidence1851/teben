@@ -31,13 +31,13 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col">
                                     <div class="form-group">
                                         <select name="class" class="form-control">
                                             <option value="" disabled selected> Select Class</option>
                                             @foreach ($classes as $class)
                                                 <option value="{{ $class->id }}"
-                                                    {{ $class->id == $requestData['class'] ?? '' ? 'selected' : '' }}>
+                                                    {{ $class->id == ($requestData['class'] ?? '') ? 'selected' : '' }}>
                                                     {{ $class->name }}
                                                 </option>
                                             @endforeach
@@ -45,13 +45,13 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col">
                                     <div class="form-group">
                                         <select name="term" class="form-control">
                                             <option value="" disabled selected> Select Term</option>
                                             @foreach ($terms as $key => $value)
                                                 <option value="{{ $key }}"
-                                                    {{ $key == $requestData['term'] ?? '' ? 'selected' : '' }}>{{ $value }}
+                                                    {{ $key == ($requestData['term'] ?? '') ? 'selected' : '' }}>{{ $value }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -62,12 +62,12 @@
                                         <button type="submit" class="btn btn-primary btn-md">Filter</button>
                                     </div>
                                 </div>
-                                @if (auth()->check())
+                                @if (!empty($user->id) && ($requestData["author"] ?? "") == $user->id)
                                     <div class="col-auto">
                                         <div class="form-group">
                                             <a href="{{ route('media_collection.factory') }}"
                                                 class="btn btn-primary btn-md">
-                                                New {{ $mediaType ?? 'Item' }}
+                                                Upload {{ $mediaType ?? 'Item' }}
                                             </a>
                                         </div>
                                     </div>

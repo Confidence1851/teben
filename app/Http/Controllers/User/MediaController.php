@@ -53,18 +53,15 @@ class MediaController extends Controller
             $builder = $builder->where('term', 'like', "%$key%");
         }
 
-        $user = auth()->user();
+        $user = optional(auth()->user());
         $media = $builder->paginate(30);
         $title = ucfirst($type);
         $url = route("media_collection.index", $type);
         $classes = Klass::orderby("name")->get();
         $terms = getTerms();
-        $requestData = [
-            "keyword" => $request['keyword'],
-            "class" => $request['class'],
-            "term" => $request['term'],
-        ];
+        $requestData = $request->all();
         $mediaType = $type == "books" ? "Book" : "Video";
+        // dd(($requestData["class"] ?? ''));
         return view('web.pages.media.index', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms' , 'mediaType'));
     }
 
@@ -96,9 +93,21 @@ class MediaController extends Controller
 
     public function factoryStore(MediaRequest $request)
     {
-        $data = $request->all();
+        $required = Rule::requiredIf(empty($request["id"]));
+        $data = $request->validate([
+            'title' => 'required|string',
+            'level' => 'required|string',
+            'klass_id' => 'required|string',
+            'subject_id' => 'required|string',
+            'image' => $required.'|mimetypes:png,jpg',
+            'attachment' => $required.'|mimes:mp4,pdf,docx,doc',
+            'term' => 'required|string',
+        ]);
         $data["price"] = AppConstants::DEFAULT_VIDEO_PRICE;
         $data["author_id"] = auth()->id();
+        if($required){
+            $data["status"] = AppConstants::PENDING_TRANSACTION;
+        }
         $this->mediaTrait->store($data);
         return back()->with("success_msg", "Media saved successfully! Admin may have to approve it first.");
     }
