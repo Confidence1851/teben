@@ -35,7 +35,9 @@ class MediaController extends Controller
 
     public function index(Request $request, $type = "")
     {
-        $builder = Media::where('status', 'Visible')->where("attachment_type", $type == "books" ? "Document" : "Video")->orderby('created_at', 'desc');
+        $builder = Media::where('status', AppConstants::ACTIVE_STATUS)
+            ->where("attachment_type", $type == "books" ? "Document" : "Video")
+            ->orderby('created_at', 'desc');
 
         if (!empty($key = $request['author'])) {
             $builder = $builder->where('author_id', $key);
@@ -62,17 +64,19 @@ class MediaController extends Controller
         $requestData = $request->all();
         $mediaType = $type == "books" ? "Book" : "Video";
         // dd(($requestData["class"] ?? ''));
-        return view('web.pages.media.index', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms' , 'mediaType'));
+        return view('web.pages.media.index', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms', 'mediaType'));
     }
 
 
     public function details(Request $request)
     {
-        $mediaItem = Media::findorfail($request->id);
+        $mediaItem = Media::where('status', AppConstants::ACTIVE_STATUS)
+            ->where("id", $request->id)
+            ->firstorfail();
         $mediaItem->views_count += 1;
         $mediaItem->save();
         $user = auth()->user();
-        return view('web.pages.media.info', compact("mediaItem" , "user"));
+        return view('web.pages.media.info', compact("mediaItem", "user"));
     }
 
 
@@ -84,11 +88,11 @@ class MediaController extends Controller
         $klasses = Klass::get();
         $terms = getTerms();
         if (!empty($id)) {
-            $mediaItem = Media::where($id)->where("user_id" , $user->id)->firstOrFail();
+            $mediaItem = Media::where($id)->where("user_id", $user->id)->firstOrFail();
         } else {
             $mediaItem = new Media($request->all());
         }
-        return view('web.pages.media.factory', compact('user','mediaItem', 'subjects', 'levels', 'klasses', 'terms'));
+        return view('web.pages.media.factory', compact('user', 'mediaItem', 'subjects', 'levels', 'klasses', 'terms'));
     }
 
     public function factoryStore(MediaRequest $request)
@@ -99,13 +103,13 @@ class MediaController extends Controller
             'level' => 'required|string',
             'klass_id' => 'required|string',
             'subject_id' => 'required|string',
-            'image' => $required.'|mimetypes:png,jpg',
-            'attachment' => $required.'|mimes:mp4,pdf,docx,doc',
+            'image' => $required . '|mimetypes:png,jpg',
+            'attachment' => $required . '|mimes:mp4,pdf,docx,doc',
             'term' => 'required|string',
         ]);
         $data["price"] = AppConstants::DEFAULT_VIDEO_PRICE;
         $data["author_id"] = auth()->id();
-        if($required){
+        if ($required) {
             $data["status"] = AppConstants::PENDING_TRANSACTION;
         }
         $this->mediaTrait->store($data);
@@ -119,7 +123,9 @@ class MediaController extends Controller
             'media_id' => 'required',
         ]);
 
-        $mediaItem = Media::findorfail($data['media_id']);
+        $mediaItem = Media::where('status', AppConstants::ACTIVE_STATUS)
+            ->where("id", $data['media_id'])
+            ->firstorfail();
 
         $name = $mediaItem->title;
         $filename = $mediaItem->getAttachment();
@@ -159,22 +165,20 @@ class MediaController extends Controller
             "parent_id" => "nullable|exists:media_comments,id",
             "media_id" => "required|exists:media,id",
             "comment" => "required|string",
-            "name" => "string|".Rule::requiredIf(!auth()->check()) ,
+            "name" => "string|" . Rule::requiredIf(!auth()->check()),
         ]);
 
-        if(!empty($user = auth()->user()))
-        {
-            $data["user_id"] = $user->id;       
-            $data["name"] = $user->name;        
+        if (!empty($user = auth()->user())) {
+            $data["user_id"] = $user->id;
+            $data["name"] = $user->name;
         }
-        
+
 
         $comment = MediaComment::create($data);
         $media = $comment->media;
         $media->update(["comments_count" => $media->comments_count + 1]);
         return back()->with("success_msg", "Comment saved successfully!");
     }
-
 }
 
 // end

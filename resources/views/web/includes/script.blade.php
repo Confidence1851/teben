@@ -1,7 +1,7 @@
 
     <!-- move top -->
    
-      <script>
+      {{-- <script>
         // When the user scrolls down 20px from the top of the document, show the button
         window.onscroll = function () {
           scrollFunction()
@@ -20,7 +20,7 @@
           document.body.scrollTop = 0;
           document.documentElement.scrollTop = 0;
         }
-      </script>
+      </script> --}}
       <!-- /move top -->
   
     <!-- jQuery and Bootstrap JS -->
