@@ -94,4 +94,8 @@ class User extends Authenticatable //implements MustVerifyEmail
     public function getMyVideosLink($id = null){
         return route("media_collection.index" , ["author" => $this->id , "type" => "video" , "id" => $id]);
     }
+
+    public function refStatusActive(){
+       return optional($this->referral)->status == $this->activeStatus;;
+    }
 }

@@ -22,7 +22,7 @@ class AdminMiddleware
         if(Auth::check()){
             $user = Auth::User();
             if($user->role != 'Admin'){
-                Session::flash('error_msg','Acess Denied!...Admins only!');
+                Session::flash('error_msg','Access Denied!...Admins only!');
                 return redirect('/home');
             }
         }

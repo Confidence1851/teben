@@ -22,7 +22,7 @@ class StudentMiddleware
         if(Auth::check()){
             $user = Auth::User();
             if($user->role != 'Student'){
-                Session::flash('error_msg','Acess Denied!...Students only!');
+                Session::flash('error_msg','Access Denied!...Students only!');
                 return redirect('/home');
             }
         }

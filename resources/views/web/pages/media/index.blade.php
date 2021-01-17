@@ -67,7 +67,7 @@
                                         <div class="form-group">
                                             <a href="{{ route('media_collection.factory') }}"
                                                 class="btn btn-primary btn-md">
-                                                New Video
+                                                New {{ $mediaType ?? 'Item' }}
                                             </a>
                                         </div>
                                     </div>

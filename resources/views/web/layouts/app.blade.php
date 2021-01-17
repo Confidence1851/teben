@@ -87,7 +87,7 @@
 }
 
 body{
-    height:2000px;
+    height:100%;
     width: 100%;
     margin:0;
     padding:0;
@@ -125,7 +125,10 @@ body{
 
     @yield('content')
     
-  <!-- footer -->
+  {{-- <!-- footer -->
+  <button onclick="topFunction()" id="movetop" title="Go to top">
+    <span class="fa fa-angle-up" aria-hidden="true"></span>
+  </button> --}}
     @include('web.includes.footer')
     @include('web.includes.script')
 

@@ -106,7 +106,6 @@ class HomeController extends Controller
         if($user->role == "Admin"){
             return redirect()->route("admin") ;
         }
-        $user->ref_status = optional($user->referral)->status;
         // $this->checkRequest();
         return view('user.dashboard', compact('user'));
     }

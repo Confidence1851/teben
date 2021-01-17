@@ -22,7 +22,7 @@ class TeacherMiddleware
         if(Auth::check()){
             $user = Auth::User();
             if($user->role != 'Teacher'){
-                Session::flash('error_msg','Acess Denied!...Teachers only!');
+                Session::flash('error_msg','Access Denied!...Teachers only!');
                 return redirect('/home');
             }
         }

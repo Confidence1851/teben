@@ -29,11 +29,11 @@ Route::get('/teacher-information/{uuid}', 'WebController@teacherinfo')->name('te
 Route::get('/lgas/{state}', 'WebController@lgas')->name('lgas');
 
 Route::namespace("User")->prefix('media-collection')->as('media_collection.')->group(function () {
-    
-    Route::get('/{type}', 'MediaController@index')->name('index');
-    Route::get('/details/{id}/{slug?}', 'MediaController@details')->name('details');
+
+    Route::get('/index/{type}', 'MediaController@index')->name('index');
 
     Route::middleware('auth')->group(function () {
+        Route::get('/details/{id}/{slug?}', 'MediaController@details')->name('details');
         Route::get('/factory/{id?}', 'MediaController@factory')->name('factory');
         Route::post('/factory/store', 'MediaController@factoryStore')->name('factory.store');
         Route::post('/download', 'MediaController@download')->name('download');

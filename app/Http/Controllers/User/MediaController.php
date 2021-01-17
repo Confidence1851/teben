@@ -64,7 +64,8 @@ class MediaController extends Controller
             "class" => $request['class'],
             "term" => $request['term'],
         ];
-        return view('web.pages.media.index', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms'));
+        $mediaType = $type == "books" ? "Book" : "Video";
+        return view('web.pages.media.index', compact('user', 'media', 'title', 'url', 'requestData', 'classes', 'terms' , 'mediaType'));
     }
 
 
@@ -73,22 +74,24 @@ class MediaController extends Controller
         $mediaItem = Media::findorfail($request->id);
         $mediaItem->views_count += 1;
         $mediaItem->save();
-        return view('web.pages.media.info', compact("mediaItem"));
+        $user = auth()->user();
+        return view('web.pages.media.info', compact("mediaItem" , "user"));
     }
 
 
     public function factory(Request $request, $id = null)
     {
+        $user = auth()->user();
         $subjects = Subject::orderby('name', 'asc')->get();
         $levels = getLevels();
         $klasses = Klass::get();
         $terms = getTerms();
         if (!empty($id)) {
-            $mediaItem = Media::findorfail($id);
+            $mediaItem = Media::where($id)->where("user_id" , $user->id)->firstOrFail();
         } else {
             $mediaItem = new Media($request->all());
         }
-        return view('web.pages.media.factory', compact('mediaItem', 'subjects', 'levels', 'klasses', 'terms'));
+        return view('web.pages.media.factory', compact('user','mediaItem', 'subjects', 'levels', 'klasses', 'terms'));
     }
 
     public function factoryStore(MediaRequest $request)

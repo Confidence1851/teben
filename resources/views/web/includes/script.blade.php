@@ -1,8 +1,6 @@
 
     <!-- move top -->
-    <button onclick="topFunction()" id="movetop" title="Go to top">
-        <span class="fa fa-angle-up" aria-hidden="true"></span>
-      </button>
+   
       <script>
         // When the user scrolls down 20px from the top of the document, show the button
         window.onscroll = function () {

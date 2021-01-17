@@ -84,7 +84,7 @@
                             </div>
                         </div>
 
-                        @if ($user->ref_status != 1)
+                        @if (!$user->refStatusActive())
                             <div class="col-md-12 mb-4 select_role">
                                 <div class="card p-4">
                                     <b>Activate your account:</b>

@@ -22,7 +22,7 @@ class AgentMiddleware
         if(Auth::check()){
             $user = Auth::User();
             if($user->sub_role != 'Agent'){
-                Session::flash('error_msg','Acess Denied!...Agents only!');
+                Session::flash('error_msg','Access Denied!...Agents only!');
                 return redirect('/home');
             }
         }

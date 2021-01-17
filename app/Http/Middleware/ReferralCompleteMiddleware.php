@@ -20,7 +20,7 @@ class ReferralCompleteMiddleware
         if(auth()->check()){
             $user = auth()->User();
             if(optional($user->referral)->status != $this->activeStatus){
-                session()->flash('error_msg','Acess Denied!...Activate your account to access this area!');
+                session()->flash('error_msg','Access Denied!...Activate your account to access this area!');
                 return redirect('/home');
             }
         }

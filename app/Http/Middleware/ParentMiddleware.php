@@ -22,7 +22,7 @@ class ParentMiddleware
         if(Auth::check()){
             $user = Auth::User();
             if($user->role != 'Parent'){
-                Session::flash('error_msg','Acess Denied!...Parents only!');
+                Session::flash('error_msg','Access Denied!...Parents only!');
                 return redirect('/home');
             }
         }
