@@ -31,8 +31,6 @@ class MediaController extends Controller
 
     public function index(Request $request)
     {
-        Media::where('status','Visible')->update(["status" => AppConstants::ACTIVE_STATUS]);
-        Media::where('status','Hidden')->update(["status" => AppConstants::INACTIVE_STATUS]);
         $builder = Media::orderby('id','desc');
         
         if (!empty($key = $request["search_keywords"])) {
