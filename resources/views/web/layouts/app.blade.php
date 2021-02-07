@@ -117,6 +117,26 @@ body{
   background-repeat: none;
   background-size: cover;
 }
+
+/* .w3l-main-banner .banner-view {
+    background-image: url('{{ $web_source }}/images/homepage/image1.jpeg')
+} */
+
+.w3l-stats {
+  background-image: url('{{ $web_source }}/images/homepage/image5.jpeg')
+}
+
+.w3l-services1 .aboutbottom {
+  background-image: url('{{ $web_source }}/images/homepage/image6.jpeg')
+}
+
+.w3l-intro .new-block {
+  background-image: url('{{ $web_source }}/images/homepage/image7.jpeg')
+}
+
+.w3l-subscribe .subscription-left {  
+  background-image: url('{{ $web_source }}/images/homepage/image13.jpeg')
+}
   </style>
   @yield('style')
   </head>

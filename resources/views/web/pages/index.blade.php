@@ -42,7 +42,7 @@
         <div class="row">
           <div class="col-md-12 mt-3">
             <div class="grids5-info">
-              <a href="#url" class="d-block zoom"><img src="{{ $web_source }}/images/p1.jpg" alt="" class="img-fluid news-image" /></a>
+              <a href="#url" class="d-block zoom"><img src="{{ $web_source }}/images/homepage/download_subjects.jpeg" alt="" class="img-fluid news-image" /></a>
               <div class="blog-info">
                 <p class="date">Students Help</p>
                 <h4>Download any Topic</h4>
@@ -72,7 +72,7 @@
         <div class="row">
           <div class="col-md-12 mt-3">
             <div class="grids5-info">
-              <a href="#url" class="d-block zoom"><img src="{{ $web_source }}/images/p3.jpg" alt="" class="img-fluid news-image" /></a>
+              <a href="#url" class="d-block zoom"><img src="{{ $web_source }}/images/homepage/image3.jpeg" alt="" class="img-fluid news-image" /></a>
               <div class="blog-info">
                 <p class="date">For Examinations</p>
                 <h4>Get the Best Tutor</h4>
@@ -87,7 +87,7 @@
         <div class="row">
           <div class="col-md-12 mt-3">
             <div class="grids5-info">
-              <a href="#url" class="d-block zoom"><img src="{{ $web_source }}/images/p4.jpg" alt="" class="img-fluid news-image" /></a>
+              <a href="#url" class="d-block zoom"><img src="{{ $web_source }}/images/homepage/image4.jpeg" alt="" class="img-fluid news-image" /></a>
               <div class="blog-info">
                 <p class="date">Admission</p>
                 <h4>All Schools</h4>
@@ -255,7 +255,7 @@ For both local and international universities and colleges?</p>
             <div class="item">
               <div class="slider-info mt-lg-4 mt-3">
                 <div class="img-circle">
-                  <img src="{{ $web_source }}/images/student1.jpg" class="img-fluid testimonial-img" alt="client image">
+                  <img src="{{ $web_source }}/images/homepage/image10.jpeg" class="img-fluid testimonial-img" alt="client image">
                 </div>
                 <div class="message">
                   <span class="fa fa-quote-left" aria-hidden="true"></span>
@@ -270,7 +270,7 @@ For both local and international universities and colleges?</p>
             <div class="item">
               <div class="slider-info mt-lg-4 mt-3">
                 <div class="img-circle">
-                  <img src="{{ $web_source }}/images/student2.jpg" class="img-fluid testimonial-img" alt="client image">
+                  <img src="{{ $web_source }}/images/homepage/image12.jpeg" class="img-fluid testimonial-img" alt="client image">
                 </div>
                 <div class="message">
                   <span class="fa fa-quote-left" aria-hidden="true"></span>
@@ -286,7 +286,7 @@ the teachers are wonderful</p>
             <div class="item">
               <div class="slider-info mt-lg-4 mt-3">
                 <div class="img-circle">
-                  <img src="{{ $web_source }}/images/student3.jpg" class="img-fluid testimonial-img" alt="client image">
+                  <img src="{{ $web_source }}/images/homepage/image11.jpeg" class="img-fluid testimonial-img" alt="client image">
                 </div>
                 <div class="message">
                   <span class="fa fa-quote-left" aria-hidden="true"></span>
@@ -301,7 +301,7 @@ the teachers are wonderful</p>
             <div class="item">
               <div class="slider-info mt-lg-4 mt-3">
                 <div class="img-circle">
-                  <img src="{{ $web_source }}/images/student4.jpg" class="img-fluid testimonial-img" alt="client image">
+                  <img src="{{ $web_source }}/images/homepage/image9.jpeg" class="img-fluid testimonial-img" alt="client image">
                 </div>
                 <div class="message">
                   <span class="fa fa-quote-left" aria-hidden="true"></span>

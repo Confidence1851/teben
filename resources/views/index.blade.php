@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <section class="ftco-intro" style="background-image: url({{ $web_source }}/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+    <section class="ftco-intro" style="background-image: url({{ $web_source }}/images/homepage/image1.jpeg);" data-stellar-background-ratio="0.5">
 			<div class="overlay"></div>
 			<div class="container">
 				<div class="row">

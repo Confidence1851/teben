@@ -20,16 +20,16 @@
           <div class="col-lg-4 col-md-6 footer-list-29 footer-3 mt-5">
             <div class="properties">
               <h6 class="footer-title-29">Recent Post</h6>
-              <a class="d-grid twitter-feed" href="blog-single.html">
-                <img src="{{ $web_source }}/images/g1.jpg" class="img-fluid rounded" alt="">
+              <a class="d-grid twitter-feed" href="#">
+                <img src="{{ $web_source }}/images/homepage/image14.jpeg" class="img-fluid rounded" alt="">
                 <p>Let's grow your school.</p>
               </a>
-              <a class="d-grid twitter-feed" href="blog-single.html">
+              <a class="d-grid twitter-feed" href="#">
                 <img src="{{ $web_source }}/images/g2.jpg" class="img-fluid rounded" alt="">
                 <p>Providing Qualified/Experienced Teachers for Schools.</p>
               </a>
-              <a class="d-grid twitter-feed" href="blog-single.html">
-                <img src="{{ $web_source }}/images/g3.jpg" class="img-fluid rounded" alt="">
+              <a class="d-grid twitter-feed" href="#">
+                <img src="{{ $web_source }}/images/homepage/image15.jpeg" class="img-fluid rounded" alt="">
                 <p>Improving schools that face academic and growth challenges.</p>
               </a>
             </div>

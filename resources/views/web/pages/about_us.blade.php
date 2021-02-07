@@ -27,28 +27,28 @@
           <div class="cwp23-text-cols">
             <div class="column">
               <span class="fa fa-smile-o" aria-hidden="true"></span>
-              <a href="services.html">Private Lectures</a>
+              <a href="#">Private Lectures</a>
               <p>We make the students our utmost priority in our teachings</p>
             </div>
             <div class="column">
               <span class="fa fa-graduation-cap" aria-hidden="true"></span>
-              <a href="services.html">Exam Registrations</a>
+              <a href="#">Exam Registrations</a>
               <p>We help student register for internal and External Examinations</p>
             </div>
             <div class="column">
               <span class="fa fa-history" aria-hidden="true"></span>
-              <a href="services.html">Results</a>
+              <a href="#">Results</a>
               <p>We have excellent records in sequence of exams</p>
             </div>
             <div class="column">
               <span class="fa fa-users" aria-hidden="true"></span>
-              <a href="services.html">Job Opportunity</a>
+              <a href="#">Job Opportunity</a>
               <p>We provide teaching services that creates room to work within and outside our institution</p>
             </div>
           </div>
         </div>
         <div class="col-lg-6 mt-lg-0 mt-5 cwp23-img">
-          <img src="{{ $web_source }}/images/g6.jpg" class="img-fluid" alt="" />
+          <img src="{{ $web_source }}/images/homepage/image8.jpeg" class="img-fluid" alt="" />
         </div>
       </div>
     </div>

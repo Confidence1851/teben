@@ -4,7 +4,7 @@
 <section class="w3l-skill-breadcrum">
   <div class="breadcrum">
     <div class="container">
-      <p><a href="index.html">Home</a> &nbsp; / &nbsp; Services</p>
+      <p><a href="{{ route("index") }}">Home</a> &nbsp; / &nbsp; Services</p>
     </div>
   </div>
 </section>
@@ -20,7 +20,7 @@
     <div class="container pt-lg-3">
       <div class="aboutgrids row">
         <div class="col-lg-6 aboutgrid2">
-          <img src="{{ $web_source }}/images/g1.jpg" alt="about image" class="img-fluid" />
+          <img src="{{ $web_source }}/images/homepage/image6.jpeg" alt="about image" class="img-fluid" />
         </div>
         <div class="col-lg-6 aboutgrid1 my-lg-0 my-5">
           <h4>Having fun while learning is possible</h4>
